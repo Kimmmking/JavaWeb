@@ -1,0 +1,153 @@
+<div th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <script>
+        $(function () {
+            let data4Vue = {
+                uri : "foreregister",
+                result : [],
+                user : {name:"",email:"",password:"",repeatpassword:""}
+            }
+            // ViewModel
+            let vue = new Vue({
+                el: "#workingArea",
+                data:data4Vue,
+                mounted:function () {
+                    linkDefaultActions()
+                },
+                methods:{
+                    register:function () {
+                        let url = this.uri
+                        if(0 === this.user.name.length){
+                            $("span.errorMessage").html("请输入登录名")
+                            $("div.registerErrorMessageDiv").css("display","block")
+                            return
+                        }
+                        if(0 === this.user.password.length){
+                            $("span.errorMessage").html("请输入密码")
+                            $("div.registerErrorMessageDiv").css("display","block")
+                            return
+                        }
+                        if(0 === this.user.repeatpassword.length){
+                            $("span.errorMessage").html("请输入重复密码");
+                            $("div.registerErrorMessageDiv").css("display","block")
+                            return
+                        }
+                        if(this.user.password !== this.user.repeatpassword){
+                            $("span.errorMessage").html("重复密码不一致");
+                            $("div.registerErrorMessageDiv").css("display","block")
+                            return
+                        }
+
+                        // fetch方法
+                        // fetch(url,{
+                        //     data:this.user,
+                        //     method: 'POST'
+                        // }).then(response => {
+                        //     let result = response.data
+                        //     if(result.code === 0){
+                        //         location.href = "registerSuccess"
+                        //     }
+                        //     else{
+                        //         $("span.errorMessage").html(result.message);
+                        //         $("div.registerErrorMessageDiv").css("visibility","visible")
+                        //     }
+                        // }).catch(error => {
+                        //     console.error('Error:', error)
+                        // })
+                        // axios方法
+                        axios.post(url,this.user).then(function(response) {
+                            let result = response.data;
+                            if(result.code === 0){
+                                location.href="login";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.registerErrorMessageDiv").css("display","block");
+                            }
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-md-center h-100">
+                <div class="card-wrapper">
+                    <div class="card fat">
+                        <div class="card-body">
+                            <div class="registerDiv">
+                                <h3 class="card-title title-purple">注册</h3>
+                                <div class="registerErrorMessageDiv">
+                                    <div class="alert alert-danger" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                        <span class="errorMessage"></span>
+                                    </div>
+                                </div>
+                                <form method="POST" class="my-login-validation" novalidate="" id="register-form">
+                                    <div class="form-group">
+                                        <label for="name">登录名</label>
+                                        <input id="name" type="text" v-model="user.name" class="form-control" name="name" required autofocus>
+                        <!--                <div class="invalid-feedback">-->
+                        <!--                    What's your name?-->
+                        <!--                </div>-->
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">邮箱</label>
+                                        <input id="email" type="email" v-model="user.email" class="form-control" name="email" required>
+                        <!--                <div class="invalid-feedback">-->
+                        <!--                    E-mail is required-->
+                        <!--                </div>-->
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">登录密码</label>
+                                        <input id="password" type="password" v-model="user.password" class="form-control" name="password" required data-eye>
+                        <!--                <div class="invalid-feedback">-->
+                        <!--                    Password is required-->
+                        <!--                </div>-->
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="repeatpassword">确认密码</label>
+                                        <input id="repeatpassword" type="password" v-model="user.repeatpassword" class="form-control" name="repeatpassword" required data-eye>
+                        <!--                <div class="invalid-feedback">-->
+                        <!--                    Password is required-->
+                        <!--                </div>-->
+                                    </div>
+
+
+                                    <div class="form-group m-0">
+                                        <a @click="register">
+                                            <button type="button" class="btn btn-primary btn-block btn-purple">注册</button>
+                                        </a>
+
+                                    </div>
+                        <!--            <div class="mt-4 text-center">-->
+                        <!--                Already have an account? <a th:href="@{/loginin}" class="purple-a">Login</a>-->
+                        <!--            </div>-->
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+    </section>
+</div>
