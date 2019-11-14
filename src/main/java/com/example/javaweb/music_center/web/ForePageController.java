@@ -2,6 +2,7 @@ package com.example.javaweb.music_center.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -55,5 +56,10 @@ public class ForePageController {
     @GetMapping(value="/pay")
     public String pay(){
         return "fore/pay";
+    }
+
+    @GetMapping(value = "/search")
+    public String search(){
+        return "fore/search";
     }
 }

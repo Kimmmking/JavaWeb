@@ -43,6 +43,11 @@ body {
     font-weight:bold;
 }
 
+.top-welcome a,.top-welcome a:hover{
+    text-decoration: none;
+    color: #db5a6b;
+}
+
 .top-welcome:hover{
     border-bottom: 2px solid #db5a6b;
     cursor: pointer;
@@ -1095,4 +1100,31 @@ button.addCartButton {
     font-size: 16px;
     color: white;
     cursor: pointer;
+}
+
+/* search.html */
+.searchDiv{
+    width: 80%;
+    margin: 80px auto;
+}
+
+.searchPage{
+    text-align:center;
+}
+
+.searchPage input{
+    margin:20px auto 60px;
+    width:60%;
+    height:40px;
+    font-size:16px;
+    background-color:#fff;
+    border-radius:20px;
+    box-shadow:0 0 20px 5px #eee;
+    text-indent:1em;
+}
+
+.searchPage button{
+    width:80px;
+    height:40px;
+    font-size:20px;
 }

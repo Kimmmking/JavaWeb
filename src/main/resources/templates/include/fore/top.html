@@ -2,14 +2,14 @@
     <!-- 顶部栏 -->
     <nav class="topper" th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
         <img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=034b64a276f0f736ccf344536b3cd87c/1e30e924b899a901e42709eb13950a7b0308f5d9.jpg" alt="" class="logo">
-        <span class="top-welcome">喵，欢迎来Music Center</span>
+        <span class="top-welcome"><a href="home">喵，欢迎来Music Center</a></span>
         <span th:if="${null==session.user}">
             <a href="login" class="top-welcome">请登录</a>
             <a href="register" class="top-welcome">免费注册</a>
 	    </span>
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="home">
+                <a href="search">
                     <span>发现音乐</span>
                 </a>
             </li>

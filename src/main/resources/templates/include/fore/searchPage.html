@@ -1,0 +1,43 @@
+<div th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <script>
+        $(function () {
+            // let keyword = getUrlParms("keyword")
+            let data4Vue={
+                uri:'foresearch',
+                products:[]
+            }
+            let vue = new Vue({
+                el:"#workingArea",
+                data:data4Vue,
+                mounted:function () {
+                   this.search()
+                },
+                methods:{
+                    search:function () {
+                        let keyword = $("#searchBar").val()
+                        let url =  this.uri + "?keyword=" + keyword
+                        axios.post(url).then(function(response) {
+                            vue.products = response.data
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+
+    <div class="searchDiv">
+        <div class="searchPage">
+            <input type="text" class="searchBar" id="searchBar">
+            <button class="search-btn" @click="search">🔍</button>
+        </div>
+
+        <div id="searchResult">
+            <div class="searchResultDiv">
+                <div th:replace="include/fore/productBySearch::html" ></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
