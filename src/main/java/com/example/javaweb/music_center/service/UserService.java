@@ -46,4 +46,8 @@ public class UserService {
         userDAO.save(user);
     }
 
+    public User get(int uid){
+        return userDAO.getOne(uid);
+    }
+
 }

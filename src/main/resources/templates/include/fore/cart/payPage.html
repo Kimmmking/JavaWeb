@@ -14,6 +14,14 @@
                 mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
                     this.oid = oid
                     this.total = total
+                },
+                methods:{
+                    comfirePay:function () {
+                        let url_ = "/mail/send"
+                        axios.get(url_).then(function (response) {
+                            alert("付款成功！感谢您的消费！")
+                        })
+                    }
                 }
             })
         })
@@ -31,7 +39,8 @@
         </div>
 
         <div>
-            <a :href="'payed?oid='+oid+'&total='+total"><button class="confirmPay">确认支付</button></a>
+<!--            <a :href="'payed?oid='+oid+'&total='+total"><button class="confirmPay">确认支付</button></a>-->
+            <button class="confirmPay" @click="comfirePay">确认支付</button>
         </div>
     </div>
 </div>

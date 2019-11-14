@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html" ></head>
+<body>
+
+
+<div id="#workingArea">
+    <script>
+        $(function () {
+            let vue = new Vue({
+                el:"#workingArea",
+                data:null,
+                mounted:function () {
+                    console.log("HERE")
+                    let url = "/mail/send"
+                    axios.get(url).then(function (response) {
+                        alert(response.data)
+                    })
+                },
+                methods:{
+                    sendemail:function () {
+                        // console.log("HERE")
+                        // let url = "/mail/send"
+                        // axios.post(url).then(function (response) {
+                        //     alert(response.data)
+                        // })
+                    }
+                }
+            })
+        })
+    </script>
+    您好，感谢您的注册，这是一封验证邮件，请点击下面的链接完成注册，感谢您的支持！<br>
+    <button @click="sendemail">发送</button>
+</div>
+
+</body>
+</html>

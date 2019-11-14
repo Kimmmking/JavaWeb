@@ -1,9 +1,7 @@
 package com.example.javaweb.music_center.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.javafx.beans.IDProperty;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.List;
 

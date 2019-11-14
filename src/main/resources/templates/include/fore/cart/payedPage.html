@@ -21,6 +21,10 @@
                         let url =  this.uri+"?oid="+oid
                         axios.get(url).then(function(response) {
                             vue.order = response.data
+                            // let url_ = "/mail/send"
+                            // axios.get(url_).then(function (response) {
+                            //
+                            // })
                         })
                     }
                 }

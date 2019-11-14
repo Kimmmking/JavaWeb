@@ -38,22 +38,6 @@
                             return
                         }
 
-                        // fetch方法
-                        // fetch(url,{
-                        //     data:this.user,
-                        //     method: 'POST'
-                        // }).then(response => {
-                        //     let result = response.data
-                        //     if(result.code === 0){
-                        //         location.href = "registerSuccess"
-                        //     }
-                        //     else{
-                        //         $("span.errorMessage").html(result.message);
-                        //         $("div.registerErrorMessageDiv").css("visibility","visible")
-                        //     }
-                        // }).catch(error => {
-                        //     console.error('Error:', error)
-                        // })
                         // axios方法
                         axios.post(url,this.user).then(function(response) {
                             let result = response.data;
