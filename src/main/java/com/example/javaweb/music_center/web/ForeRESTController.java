@@ -8,6 +8,8 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +51,6 @@ public class ForeRESTController {
     @PostMapping("/foreregister")
     public Object register(@RequestBody User user){
         String email = user.getEmail();
-        String name = user.getName();
-        name = HtmlUtils.htmlEscape(name);
 
         boolean exist = userService.isExist(email);
 
@@ -58,8 +58,21 @@ public class ForeRESTController {
             String message = "该邮箱已被注册";
             return Result.fail(message);
         }
+        String password = user.getPassword();
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        int times = 2;
+        String algorithmName = "md5";
+
+        String encodedPassword = new SimpleHash(algorithmName,password,salt,times).toString();
+
+        String name = user.getName();
+        name = HtmlUtils.htmlEscape(name);
+
         user.setName(name);
+        user.setSalt(salt);
+        user.setPassword(encodedPassword);
         userService.add(user);
+
         return Result.success();
     }
 
@@ -67,28 +80,31 @@ public class ForeRESTController {
     public Object login(@RequestBody User userParam, HttpSession session){
         String email =  userParam.getEmail();
 
-        User user = userService.get(email,userParam.getPassword());
-        if(null == user){
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(email, userParam.getPassword());
+        try {
+            subject.login(token);
+            User user = userService.getByEmail(email);
+//	    	subject.getSession().setAttribute("user", user);
+            session.setAttribute("user", user);
+            return Result.success();
+        } catch (AuthenticationException e) {
             String message ="账号密码错误";
             return Result.fail(message);
         }
-        else{
-            session.setAttribute("user", user);
-            return Result.success();
-        }
+    }
 
-//        Subject subject = SecurityUtils.getSubject();
-//        UsernamePasswordToken token = new UsernamePasswordToken(email, userParam.getPassword());
-//        try {
-//            subject.login(token);
-//            User user = userService.getByEmail(email);
-////	    	subject.getSession().setAttribute("user", user);
-//            session.setAttribute("user", user);
+    @GetMapping("/forecheckLogin")
+    public Object checkLogin(HttpSession session) {
+//        User user =(User)session.getAttribute("user");
+//        if(null!=user)
 //            return Result.success();
-//        } catch (AuthenticationException e) {
-//            String message ="账号密码错误";
-//            return Result.fail(message);
-//        }
+//        return Result.fail("未登录");
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.isAuthenticated())
+            return Result.success();
+        else
+            return Result.fail("未登录");
     }
 
     @GetMapping("/foreproduct/{pid}")
@@ -111,19 +127,6 @@ public class ForeRESTController {
         map.put("reviews", reviews);
 
         return Result.success(map);
-    }
-
-    @GetMapping("/forecheckLogin")
-    public Object checkLogin(HttpSession session) {
-        User user =(User)session.getAttribute("user");
-        if(null!=user)
-            return Result.success();
-        return Result.fail("未登录");
-//        Subject subject = SecurityUtils.getSubject();
-//        if(subject.isAuthenticated())
-//            return Result.success();
-//        else
-//            return Result.fail("未登录");
     }
 
     @GetMapping("forecategory/{cid}")
@@ -286,7 +289,7 @@ public class ForeRESTController {
 
     @PostMapping("foresearch")
     public Object search( String keyword){
-        if(null==keyword)
+        if(null == keyword)
             keyword = "";
         List<Product> ps= productService.search(keyword,0,20);
         productImageService.setFirstProductImages(ps);

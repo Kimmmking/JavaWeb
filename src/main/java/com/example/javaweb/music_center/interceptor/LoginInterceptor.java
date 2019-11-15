@@ -16,7 +16,27 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = httpServletRequest.getSession();
         String contextPath = session.getServletContext().getContextPath();
         String[] requireAuthPages = new String[]{
-                ""
+                "buy",
+                "pay",
+                "payed",
+                "cart",
+                // "bought",
+                "confirmPay",
+                // "orderConfirmed",
+                "forebuyone",
+                "forebuy",
+                "foreaddCart",
+                "forecart",
+                "forechangeOrderItem",
+                "foredeleteOrderItem",
+                "forecreateOrder",
+                "forepayed",
+                "forebought",
+                "foreconfirmPay",
+                "foreorderConfirmed",
+                "foredeleteOrder"
+//                "forereview",
+//                "foredoreview"
         };
         String uri = httpServletRequest.getRequestURI();
         uri = StringUtils.remove(uri,contextPath+"/");

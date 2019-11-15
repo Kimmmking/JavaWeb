@@ -1,5 +1,7 @@
 package com.example.javaweb.music_center.web;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +31,10 @@ public class ForePageController {
     }
 
     @GetMapping("/forelogout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("user");
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.isAuthenticated())
+            subject.logout();
         return "redirect:home";
     }
 
@@ -53,6 +57,7 @@ public class ForePageController {
     public String cart(){
         return "fore/cart";
     }
+
     @GetMapping(value="/pay")
     public String pay(){
         return "fore/pay";

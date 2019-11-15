@@ -2,14 +2,14 @@
     <div class="searchProducts">
         <div class="productItem" v-for="p in products" >
             <li class="item">
-                <!--            <a :href="'product?pid='+p.id">-->
-                <!--                <img class="productImage" :src="'img/productSingle/'+p.firstProductImage.id+'.jpg'">-->
-                <!--            </a>-->
-                <img class="item-img" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=034b64a276f0f736ccf344536b3cd87c/1e30e924b899a901e42709eb13950a7b0308f5d9.jpg" alt="">
-                <h4 class="item-title">{{p.name | subStringFilter(0,20)}}</h4>
-                <p class="item-owner">{{p.subTitle | subStringFilter(0,20)}}</p>
-                <span class="item-price">{{p.promotePrice | formatMoneyFilter}} RMB</span>
-                <button class="buy-btn">查看详情</button>
+                <a :href="'product?pid='+p.id">
+                    <!--                <img class="productImage" :src="'img/productSingle/'+p.firstProductImage.id+'.jpg'">-->
+                    <img class="item-img" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=034b64a276f0f736ccf344536b3cd87c/1e30e924b899a901e42709eb13950a7b0308f5d9.jpg" alt="">
+                    <h4 class="item-title">{{p.name | subStringFilter(0,20)}}</h4>
+                    <p class="item-owner">{{p.subTitle | subStringFilter(0,20)}}</p>
+                    <span class="item-price">{{p.promotePrice | formatMoneyFilter}} RMB</span>
+                    <button class="buy-btn">查看详情</button>
+                </a>
             </li>
         </div>
 

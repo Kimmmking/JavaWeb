@@ -68,7 +68,6 @@
             <artifactId>jna</artifactId>
             <version>3.0.9</version>
         </dependency>
-
         <!-- thymeleaf legacyhtml5 模式支持 -->
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
