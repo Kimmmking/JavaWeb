@@ -323,7 +323,7 @@ body {
 .carousel-of-product {
     width: 90%;
     height: 520px;
-    margin:0px auto 20px;
+    margin:0px auto 40px;
 }
 
 .carouselImage{
@@ -479,8 +479,10 @@ div.categoryMenu a {
 
 /* productItem */
 .productItem{
+    width:90%;
+    margin:0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding-top:30px;
     flex-wrap:wrap;
     font-weight:bold;
@@ -493,8 +495,8 @@ div.categoryMenu a {
 }
 .productItem li{
     position: relative;
-    margin-bottom: 30px;
     display:block;
+    margin:0 20px 20px;
     width: 250px;
     height: 300px;
     padding-top: 10px;
@@ -1127,4 +1129,17 @@ button.addCartButton {
     width:80px;
     height:40px;
     font-size:20px;
+}
+
+/* bought.html */
+.boughtDiv{
+    margin: 80px auto;
+    width: 80%;
+}
+
+.orderListItemConfirm{
+    padding: 10px 20px;
+    background-color: #c7254e;
+    color: #fff;
+    border-radius: 6px;
 }

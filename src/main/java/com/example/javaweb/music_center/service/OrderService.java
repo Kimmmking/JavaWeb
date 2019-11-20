@@ -3,6 +3,7 @@ package com.example.javaweb.music_center.service;
 import com.example.javaweb.music_center.dao.OrderDAO;
 import com.example.javaweb.music_center.pojo.Order;
 import com.example.javaweb.music_center.pojo.OrderItem;
+import com.example.javaweb.music_center.pojo.User;
 import com.example.javaweb.music_center.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,15 +25,13 @@ public class OrderService {
     public static final String finish = "finish";
     public static final String delete = "delete";
 
-    @Autowired
-    OrderDAO orderDAO;
-    @Autowired
-    OrderItemService orderItemService;
+    @Autowired OrderDAO orderDAO;
+    @Autowired OrderItemService orderItemService;
 
     public Page4Navigator<Order> list(int start, int size, int navigatePages) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size,sort);
-        Page pageFromJPA = orderDAO.findAll(pageable);
+        Page pageFromJPA =orderDAO.findAll(pageable);
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
@@ -74,6 +73,16 @@ public class OrderService {
     }
     public void add(Order order) {
         orderDAO.save(order);
+    }
+
+    public List<Order> listByUserWithoutDelete(User user) {
+        List<Order> orders = listByUserAndNotDeleted(user);
+        orderItemService.fill(orders);
+        return orders;
+    }
+
+    public List<Order> listByUserAndNotDeleted(User user) {
+        return orderDAO.findByUserAndStatusNotOrderByIdDesc(user, OrderService.delete);
     }
 
 }

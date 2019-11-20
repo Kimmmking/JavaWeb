@@ -15,13 +15,14 @@
                     this.oid = oid
                     this.total = total
                 },
-                methods:{
-                    comfirePay:function () {
-                        let url_ = "/mail/send"
-                        axios.get(url_).then(function (response) {
-                            alert("付款成功！感谢您的消费！")
-                        })
-                    }
+                methods: {
+                    // comfirePay: function () {
+                    //     let url_ = "mail/send"
+                    //     axios.get(url_).then(function (response) {
+                    //         alert("付款成功！感谢您的消费！")
+                    //         window.location="home"
+                    //     })
+                    // }
                 }
             })
         })
@@ -39,8 +40,8 @@
         </div>
 
         <div>
-<!--            <a :href="'payed?oid='+oid+'&total='+total"><button class="confirmPay">确认支付</button></a>-->
-            <button class="confirmPay" @click="comfirePay">确认支付</button>
+            <a :href="'payed?oid='+oid+'&total='+total"><button class="confirmPay">确认支付</button></a>
+<!--            <button class="confirmPay" @click="comfirePay">确认支付</button>-->
         </div>
     </div>
 </div>

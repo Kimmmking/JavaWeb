@@ -278,6 +278,24 @@ public class ForeRESTController {
         return Result.success(map);
     }
 
+    @GetMapping("foredeleteOrderItem")
+    public Object deleteOrderItem(HttpSession session,int oiid){
+        User user =(User)  session.getAttribute("user");
+        if(null==user)
+            return Result.fail("未登录");
+        orderItemService.delete(oiid);
+        return Result.success();
+    }
+
+
+    @PutMapping("foredeleteOrder")
+    public Object deleteOrder(int oid){
+        Order o = orderService.get(oid);
+        o.setStatus(OrderService.delete);
+        orderService.update(o);
+        return Result.success();
+    }
+
     @GetMapping("forepayed")
     public Object payed(int oid) {
         Order order = orderService.get(oid);
@@ -295,5 +313,15 @@ public class ForeRESTController {
         productImageService.setFirstProductImages(ps);
         productService.setSaleAndReviewNumber(ps);
         return ps;
+    }
+
+    @GetMapping("forebought")
+    public Object bought(HttpSession session) {
+        User user =(User)  session.getAttribute("user");
+        if(null == user)
+            return Result.fail("未登录");
+        List<Order> os= orderService.listByUserWithoutDelete(user);
+        orderService.removeOrderFromOrderItem(os);
+        return os;
     }
 }

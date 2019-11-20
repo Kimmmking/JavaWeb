@@ -19,10 +19,8 @@ public class Order {
     
     @ManyToOne
     @JoinColumn(name="uid")
-    
     private User user;
-    
-	
+
 	private String orderCode;
 	private String address;
 	private String post;
@@ -45,8 +43,6 @@ public class Order {
 	private String statusDesc;
 	
 
-	
-	
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
 	}

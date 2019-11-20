@@ -67,4 +67,14 @@ public class ForePageController {
     public String search(){
         return "fore/search";
     }
+
+    @GetMapping(value = "/bought")
+    public String bought(){
+        return "fore/bought";
+    }
+
+    @GetMapping(value = "/payed")
+    public String payed(){
+        return "fore/payed";
+    }
 }
