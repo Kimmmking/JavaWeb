@@ -1,8 +1,8 @@
 <template th:fragment="html" xmlns:th="http://www.w3.org/1999/XSL/Transform">
     <script src="../../../../webapp/js/jquery/2.0.0/jquery.min.js" th:src="@{/js/jquery/2.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <!--    <link href="../../../static/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap/3.3.6/bootstrap.min.css}">-->
-    <!--    <script src="../../../static/js/bootstrap/3.3.6/bootstrap.min.js" th:src="@{/js/bootstrap/3.3.6/bootstrap.min.js}"></script>-->
+    <script src="../../../../webapp/js/chartjs/chart.min.js" th:src="@{/js/chartjs/chart.min.js
+    }"></script>
     <script src="../../../../webapp/js/vue/2.5.16/vue.min.js" th:src="@{/js/vue/2.5.16/vue.min.js}"></script>
     <script src="../../../../webapp/js/axios/0.17.1/axios.min.js" th:src="@{/js/axios/0.17.1/axios.min.js}"></script>
     <script src="../../../../webapp/js/moment/2.22.2/moment.js" th:src="@{/js/moment/2.22.2/moment.js}"></script>
@@ -13,7 +13,7 @@
         //判断是否为空
         function checkEmpty(value,text){
 
-            if(null==value || value.length==0){
+            if(null === value || value.length === 0){
                 alert(text+ "不能为空");
                 return false;
             }
@@ -23,8 +23,8 @@
         //获取地址栏参数的函数
         function getUrlParms(para){
             let search=location.search; //页面URL的查询部分字符串
-            let arrPara=new Array(); //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
-            let arrVal=new Array(); //参数值数组。用于存储查找到的参数值
+            let arrPara=[]; //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
+            let arrVal=[]; //参数值数组。用于存储查找到的参数值
 
             if(search !== ""){
                 let index=0;
@@ -78,8 +78,7 @@
 
         //确实是否要删除
         function checkDeleteLink(){
-            let confirmDelete = confirm("确认要删除");
-            return confirmDelete;
+            return confirm("确认要删除");
 
         }
         //跳转函数

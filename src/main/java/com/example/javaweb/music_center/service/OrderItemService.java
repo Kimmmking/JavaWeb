@@ -49,7 +49,7 @@ public class OrderItemService {
         orderItemDAO.delete(id);
     }
 
-    int getSaleCount(Product product) {
+    public int getSaleCount(Product product) {
         List<OrderItem> ois =listByProduct(product);
         int result = 0;
         for (OrderItem oi : ois) {
@@ -70,4 +70,6 @@ public class OrderItemService {
     public List<OrderItem> listByUser(User user) {
         return orderItemDAO.findByUserAndOrderIsNull(user);
     }
+
+
 }

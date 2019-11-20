@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/admin/adminHeader::html" ></head>
+<body>
+    <div th:replace="include/admin/adminNavigator::html" ></div>
+
+    <script>
+
+        $(function(){
+            let data4Vue = {
+                uri : "adminchart",
+                categories:[],
+                name:[],
+                saleCount:[]
+            }
+
+            let vue = new Vue({
+                el:"#workingArea",
+                data:data4Vue,
+                mounted:function () {
+                    this.load()
+                },
+                methods:{
+                    load:function () {
+                        let url = "categories/saleinfo"
+                        axios.get(url).then(response =>{
+                            let result = response.data
+                            vue.categories = result.data.categories
+                            vue.saleCount = result.data.saleCount
+                            for( let n in vue.categories){
+                                vue.name.push(vue.categories[n].name)
+                            }
+                            console.log(vue.saleCount)
+                            this.drawCategory()
+                        })
+                    },
+                    drawCategory:function () {
+                        let cxt = $("#categoryChart").get(0).getContext("2d")
+                        let categoryChart = new Chart(cxt,{
+                            type:'line',
+                            data:{
+                                labels: vue.name,
+                                datasets:[{
+                                    label: '各分类销售量',
+                                    data: vue.saleCount,
+                                    borderColor:'blue',
+                                    borderWidth: 1,
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                tooltips: {
+                                    intersect: false,
+                                    mode: 'index'
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+
+
+
+    </script>
+
+<div id="workingArea">
+    <div class="chartDIV">
+        <canvas id="categoryChart"></canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div th:replace="include/admin/adminFooter::html" ></div>
+</body>

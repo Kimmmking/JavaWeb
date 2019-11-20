@@ -1,8 +1,12 @@
 package com.example.javaweb.music_center.web;
 
 import com.example.javaweb.music_center.pojo.Category;
+import com.example.javaweb.music_center.pojo.Product;
 import com.example.javaweb.music_center.service.CategoryService;
+import com.example.javaweb.music_center.service.OrderItemService;
+import com.example.javaweb.music_center.service.ProductService;
 import com.example.javaweb.music_center.util.Page4Navigator;
+import com.example.javaweb.music_center.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,12 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    OrderItemService orderItemService;
 
     @GetMapping("/categories")
     public Page4Navigator<Category> list(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
@@ -68,5 +80,27 @@ public class CategoryController {
 //            saveOrUpdateImageFile(bean, image, request);
 //        }
         return bean;
+    }
+
+    @GetMapping("/categories/saleinfo")
+    public Object get4chart(){
+        List<Category> categories = categoryService.list();
+        List<Integer> saleCount = new ArrayList<>();
+
+        for(Category category : categories){
+            int count = 0;
+            List<Product> products = productService.listByCategory(category);
+            for(Product product : products){
+                count += orderItemService.getSaleCount(product);
+            }
+            saleCount.add(count);
+        }
+
+        Map<String,Object> map= new HashMap<>();
+        map.put("categories", categories);
+        map.put("saleCount", saleCount);
+
+        return Result.success(map);
+
     }
 }

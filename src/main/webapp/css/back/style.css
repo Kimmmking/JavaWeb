@@ -39,11 +39,16 @@ div#workingArea{
 }
 
 .logo{
-	margin: 5px 0 5px 10%;
+	margin: 5px 5px 5px 10%;
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
 	box-shadow: 0px 0px 2px 2px #ccc;
+}
+
+.topper span{
+	color: #db5a6b;
+	font-weight: bold;
 }
 
 .nav-list{
@@ -204,4 +209,13 @@ ul.pagination li{
 .footer li:nth-child(1){
 	font-size: 16px;
 	margin: 10px;
+}
+
+/* chart.html */
+.chartDIV{
+	margin:80px auto;
+	width:40%;
+	padding:50px;
+	background-color:#fff;
+	border-radius:20px;
 }

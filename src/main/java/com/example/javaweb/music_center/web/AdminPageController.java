@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminPageController {
     @GetMapping(value="/admin")
     public String admin(){
-        return "redirect:admin_category_list";
+        return "redirect:admin_chart_show";
     }
 
     @GetMapping(value="/admin_category_list")
@@ -58,5 +58,10 @@ public class AdminPageController {
     @GetMapping(value="/admin_user_list")
     public String listUser(){
         return "admin/listUser";
+    }
+
+    @GetMapping(value = "/admin_chart_show")
+    public String showChart(){
+        return "admin/chartShow";
     }
 }
