@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -306,10 +307,12 @@ public class ForeRESTController {
     }
 
     @PostMapping("foresearch")
-    public Object search( String keyword){
-        if(null == keyword)
-            keyword = "";
-        List<Product> ps= productService.search(keyword,0,20);
+    public Object search(String keyword) throws IOException {
+        if(null == keyword){
+            return new ArrayList<>();
+        }
+
+        List<Product> ps= productService.search(keyword);
         productImageService.setFirstProductImages(ps);
         productService.setSaleAndReviewNumber(ps);
         return ps;

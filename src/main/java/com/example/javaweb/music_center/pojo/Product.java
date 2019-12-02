@@ -1,7 +1,6 @@
 package com.example.javaweb.music_center.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,8 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer"})
-@Document(indexName = "music_center",type = "product")
-public class Product {
+public class Product implements Comparable<Product>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -40,6 +38,8 @@ public class Product {
     @Transient
     private int saleCount;
 
+    @Transient
+    private int contains;
 
     public int getId() {
         return id;
@@ -119,11 +119,29 @@ public class Product {
     public void setSaleCount(int saleCount) {
         this.saleCount = saleCount;
     }
+
+    public int getContains() {
+        return contains;
+    }
+
+    public void setContains(int contains) {
+        this.contains = contains;
+    }
+
     @Override
     public String toString() {
         return "Product [id=" + id + ", category=" + category + ", name=" + name + ", subTitle=" + subTitle
                 + ", originalPrice=" + originalPrice + ", promotePrice=" + promotePrice + ", stock=" + stock
                 + ", createDate=" + createDate + ", firstProductImage=" + firstProductImage + ", reviewCount="
                 + reviewCount + ", saleCount=" + saleCount + "]";
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        // TODO Auto-generated method stub
+        if(this.contains >= o.contains)
+            return -1;//由高到底排序
+        else
+            return 1;
     }
 }

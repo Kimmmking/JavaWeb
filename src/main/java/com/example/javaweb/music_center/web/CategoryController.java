@@ -87,6 +87,9 @@ public class CategoryController {
         List<Category> categories = categoryService.list();
         List<Integer> saleCount = new ArrayList<>();
 
+        List<String> dateName = new ArrayList<>();
+        List<Float> dailySale = new ArrayList<>();
+
         for(Category category : categories){
             int count = 0;
             List<Product> products = productService.listByCategory(category);

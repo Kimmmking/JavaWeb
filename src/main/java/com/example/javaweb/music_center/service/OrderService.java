@@ -81,7 +81,7 @@ public class OrderService {
         return orders;
     }
 
-    public List<Order> listByUserAndNotDeleted(User user) {
+    private List<Order> listByUserAndNotDeleted(User user) {
         return orderDAO.findByUserAndStatusNotOrderByIdDesc(user, OrderService.delete);
     }
 

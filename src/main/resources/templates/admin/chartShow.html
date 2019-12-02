@@ -11,7 +11,9 @@
                 uri : "adminchart",
                 categories:[],
                 name:[],
-                saleCount:[]
+                saleCount:[],
+                dateName:[],
+                dailySale:[]
             }
 
             let vue = new Vue({
@@ -27,6 +29,8 @@
                             let result = response.data
                             vue.categories = result.data.categories
                             vue.saleCount = result.data.saleCount
+                            vue.dailySale = result.data.dailySale
+                            vue.dateName = result.data.dateName
                             for( let n in vue.categories){
                                 vue.name.push(vue.categories[n].name)
                             }
@@ -37,12 +41,32 @@
                     drawCategory:function () {
                         let cxt = $("#categoryChart").get(0).getContext("2d")
                         let categoryChart = new Chart(cxt,{
-                            type:'line',
+                            type:'doughnut',
                             data:{
                                 labels: vue.name,
                                 datasets:[{
                                     label: '各分类销售量',
                                     data: vue.saleCount,
+                                    borderColor:'lightGray',
+                                    backgroundColor:[ '#d2ebc6', '#e3f4d0', '#ecfbed', '#e6f5e8', '#dcf8ec','#d3f1ea','#e5f8f6','#d1f3f3','#bce6e6','#9cd8d8'],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                tooltips: {
+                                    intersect: false,
+                                    mode: 'index'
+                                }
+                            }
+                        })
+                        let cxt_ = $("#dailySaleChart").get(0).getContext("2d")
+                        let dailySaleChart = new Chart(cxt_,{
+                            type:'line',
+                            data:{
+                                labels: vue.dateName,
+                                datasets:[{
+                                    label: '近一个月的销售额',
+                                    data: vue.dailySale,
                                     borderColor:'blue',
                                     borderWidth: 1,
                                     fill: false
@@ -69,13 +93,10 @@
     <div class="chartDIV">
         <canvas id="categoryChart"></canvas>
     </div>
+    <div class="chartDIV">
+        <canvas id="dailySaleChart"></canvas>
+    </div>
 </div>
-
-
-
-
-
-
 
 
     <div th:replace="include/admin/adminFooter::html" ></div>

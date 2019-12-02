@@ -18,10 +18,11 @@
                 let begin = $("input.beginPrice").val();
                 let end = $("input.endPrice").val();
                 if(!isNaN(begin) && !isNaN(end)){
-                    $("div.productUnit").hide();
-                    $("div.productUnit").each(function(){
+                    let productUnit = $("div.productUnit")
+                    productUnit.hide();
+                    productUnit.each(function(){
                         let price = $(this).attr("price");
-                        price = new Number(price);
+                        price = Number(price);
 
                         if(price <= end && price >= begin)
                             $(this).show();

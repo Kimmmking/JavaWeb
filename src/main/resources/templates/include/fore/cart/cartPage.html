@@ -3,7 +3,8 @@
         $(function(){
             let data4Vue = {
                 uri:'forecart',
-                orderItems:[]
+                orderItems:[],
+                user:{name:'',password:''}
             }
             //ViewModel
             let vue = new Vue({
@@ -14,14 +15,23 @@
                 },
                 methods: {
                     load:function(){
-                        let url =  this.uri
+                        let url = "forecheckLogin"
                         axios.get(url).then(function(response) {
-                            vue.orderItems = response.data
-                            vue.$nextTick(function(){
-                                linkDefaultActions()
-                                cartPageRegisterListeners()
-                            })
+                            if(0 === response.data.code){
+                                let url_ =  this.uri
+                                axios.get(url_).then(function(response) {
+                                    vue.orderItems = response.data
+                                    vue.$nextTick(function(){
+                                        linkDefaultActions()
+                                        cartPageRegisterListeners()
+                                    })
+                                })
+                            }
+                            else{
+                                $("#loginModal").modal('show')
+                            }
                         })
+
                     }
                 }
             })
@@ -76,8 +86,7 @@
             $("img.selectAllItem").click(function(){
                 let selectit = $(this).attr("selectit")
                 if("selectit" === selectit){
-                    $("img.selectAllItem").attr("src","img/site/cartNotSelected.png")
-                    $("img.selectAllItem").attr("selectit","false")
+                    $("img.selectAllItem").attr("src","img/site/cartNotSelected.png").attr("selectit","false")
                     $(".cartProductItemIfSelected").each(function(){
                         $(this).attr("src","img/site/cartNotSelected.png")
                         $(this).attr("selectit","false")
@@ -85,8 +94,7 @@
                     })
                 }
                 else{
-                    $("img.selectAllItem").attr("src","img/site/cartSelected.png")
-                    $("img.selectAllItem").attr("selectit","selectit")
+                    $("img.selectAllItem").attr("src","img/site/cartSelected.png").attr("selectit","selectit")
                     $(".cartProductItemIfSelected").each(function(){
                         $(this).attr("src","img/site/cartSelected.png")
                         $(this).attr("selectit","selectit")

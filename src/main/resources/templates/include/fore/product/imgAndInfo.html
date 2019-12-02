@@ -41,11 +41,7 @@
                         axios.get(url).then(function(response) {
                             let result = response.data
                             if(0 === result.code){
-                                $(".addCartButton").html("已加入购物车")
-                                $(".addCartButton").attr("disabled","disabled")
-                                $(".addCartButton").css("background-color","lightgray")
-                                $(".addCartButton").css("border-color","lightgray")
-                                $(".addCartButton").css("color","black")
+                                $(".addCartButton").html("已加入购物车").attr("disabled","disabled").css("background-color","lightgray").css("border-color","lightgray").css("color","black")
                             }
                         })
                     }
