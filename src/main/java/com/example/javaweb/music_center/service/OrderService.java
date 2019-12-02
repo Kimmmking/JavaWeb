@@ -49,7 +49,7 @@ public class OrderService {
     }
 
     public Order get(int oid) {
-        return orderDAO.findOne(oid);
+        return orderDAO.getOne(oid);
     }
 
     public void update(Order bean) {

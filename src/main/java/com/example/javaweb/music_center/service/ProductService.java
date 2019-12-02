@@ -29,11 +29,11 @@ public class ProductService {
     }
 
     public void delete(int id) {
-        productDAO.delete(id);
+        productDAO.deleteById(id);
     }
 
     public Product get(int id) {
-        return productDAO.findOne(id);
+        return productDAO.getOne(id);
     }
 
     public void update(Product bean) {

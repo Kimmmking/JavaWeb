@@ -42,11 +42,11 @@ public class OrderItemService {
         orderItemDAO.save(orderItem);
     }
     public OrderItem get(int id) {
-        return orderItemDAO.findOne(id);
+        return orderItemDAO.getOne(id);
     }
 
     public void delete(int id) {
-        orderItemDAO.delete(id);
+        orderItemDAO.deleteById(id);
     }
 
     public int getSaleCount(Product product) {
