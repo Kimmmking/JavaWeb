@@ -11,6 +11,5 @@ import java.util.List;
 public interface ProductDAO extends JpaRepository<Product, Integer> {
 	Page<Product> findByCategory(Category category, Pageable pageable);
 	List<Product> findByCategoryOrderById(Category category);
-    List<Product> findByNameLike(String s);
-    List<Product> findByNameOrSubTitleLike(String name, String subTitle);
+    List<Product> findByNameOrSubTitleContaining(String keyword, String keyword1);
 }

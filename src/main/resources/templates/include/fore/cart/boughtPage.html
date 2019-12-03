@@ -4,7 +4,7 @@
             let data4Vue = {
                 uri:'forebought',
                 orders:[],
-                user:{name:'',password:''}
+                user:{email:'',password:''}
             }
             //ViewModel
             let vue = new Vue({
@@ -19,21 +19,47 @@
                         axios.get(url).then(function(response) {
                             console.log("checklogin")
                             if(0 === response.data.code){
-                                let url_ =  this.uri
-                                axios.get(url_).then(function(response) {
-                                    vue.orders = response.data
+                                let url_ =  "forebought"
+                                axios.get(url_).then(function(response_) {
+                                    vue.orders = response_.data
                                     vue.$nextTick(function(){
                                         linkDefaultActions()
                                         orderPageRegisterListeners()
                                     })
                                 })
-                            } else{
+                            }else{
                                 $("#loginModal").modal('show')
+                                $(".loginSubmitButton").click(function(){
+                                    let url =  "forelogin"
+                                    console.log(vue.user)
+                                    if(0 === vue.user.email.length){
+                                        $("span.errorMessage").html("请输入邮箱")
+                                        $("div.loginErrorMessageDiv").css("display","block")
+                                        return
+                                    }
+                                    if(0 === vue.user.password.length){
+                                        $("span.errorMessage").html("请输入密码")
+                                        $("div.loginErrorMessageDiv").css("display","block")
+                                        return
+                                    }
+
+                                    axios.post(url,vue.user).then(function(response) {
+                                        let result = response.data
+                                        if(result.code === 0){
+                                            location.href="bought"
+                                        }
+                                        else{
+                                            $("span.errorMessage").html(result.message)
+                                            $("div.loginErrorMessageDiv").css("display","block")
+                                        }
+                                    })
+                                })
                             }
                         })
 
                     }
                 }
+
             })
         })
         let deleteOrder = false
@@ -78,7 +104,9 @@
                     })
                 }
             })
+
         }
+
     </script>
     <div class="boughtDiv">
         <div class="orderListTitle">
@@ -114,7 +142,7 @@
 
                     <td class="orderItemDeleteTD">
                         <a class="deleteOrderLink" :oid="o.id" href="#nowhere">
-                            <span  class="orderListItemDelete glyphicon glyphicon-trash"></span>
+                            <span  class="orderListItemDelete">删除</span>
                         </a>
 
                     </td>

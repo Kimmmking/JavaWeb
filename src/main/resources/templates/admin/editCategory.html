@@ -30,12 +30,11 @@
                 },
                 update:function () {
                     if(!checkEmpty(this.bean.name, "分类名称"))
-                        return;
-                    let url = this.uri + "/" + this.bean.id;
+                        return
+                    let url = this.uri + "/" + this.bean.id
 
                     //axios.js 上传文件要用 formData 这种方式
-                    let formData = new FormData();
-                    // formData.append("image", this.file)
+                    let formData = new FormData()
                     formData.append("name", this.bean.name)
                     axios.post(url,formData).then(function(response){
                         location.href = vue.listURL

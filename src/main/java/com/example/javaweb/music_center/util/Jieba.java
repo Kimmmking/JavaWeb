@@ -24,10 +24,10 @@ public class Jieba {
     //    获得自定义分词
     private static HashSet<String> getWords() throws IOException{
         StringBuilder buffer = new StringBuilder();
-//        BufferedReader bf = new BufferedReader(new FileReader(ResourceUtils.getFile("classpath:dicts/words.txt"));
+        BufferedReader bf = new BufferedReader(new FileReader(ResourceUtils.getFile("classpath:dicts/words.txt")));
 
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(ResourceUtils.getFile("classpath:dicts/words.txt")), StandardCharsets.UTF_8);
-        BufferedReader bf = new BufferedReader(isr);
+//        InputStreamReader isr = new InputStreamReader(new FileInputStream("/dicts/words.txt"), StandardCharsets.UTF_8);
+//        BufferedReader bf = new BufferedReader(isr);
         String s = null;
         while((s = bf.readLine()) != null){
             //使用readLine方法，一次读一行
@@ -37,9 +37,8 @@ public class Jieba {
         String xml = buffer.toString();
         bf.close();
         String [] str = xml.split("\\s");		//以空格分割
-//        System.out.println(str.length);		//输出数组的大小
         HashSet<String> set = new HashSet<>(Arrays.asList(str));	//将数组转换为set集合，去重
-        System.out.println(set);	//输出set中元素的个数
+        System.out.println("Jieba: " + set);	//输出set中元素
         return set;
     }
 

@@ -32,12 +32,10 @@ public class ProductImageController {
         Product product = productService.get(pid);
 
         if(ProductImageService.type_single.equals(type)) {
-            List<ProductImage> singles =  productImageService.listSingleProductImages(product);
-            return singles;
+            return productImageService.listSingleProductImages(product);
         }
         else if(ProductImageService.type_detail.equals(type)) {
-            List<ProductImage> details =  productImageService.listDetailProductImages(product);
-            return details;
+            return productImageService.listDetailProductImages(product);
         }
         else {
             return new ArrayList<>();
@@ -67,6 +65,7 @@ public class ProductImageController {
         try {
             image.transferTo(file);
             BufferedImage img = ImageUtil.change2jpg(file);
+            assert img != null;
             ImageIO.write(img, "jpg", file);
         } catch (IOException e) {
             e.printStackTrace();

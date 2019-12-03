@@ -2,9 +2,9 @@
     <script>
         $(function(){
             let data4Vue = {
-                uri:'forecart',
+                uri:"forecart",
                 orderItems:[],
-                user:{name:'',password:''}
+                user:{email:'',password:''}
             }
             //ViewModel
             let vue = new Vue({
@@ -17,18 +17,44 @@
                     load:function(){
                         let url = "forecheckLogin"
                         axios.get(url).then(function(response) {
+                            console.log("forecheckLogin")
                             if(0 === response.data.code){
-                                let url_ =  this.uri
-                                axios.get(url_).then(function(response) {
-                                    vue.orderItems = response.data
+                                console.log("forecart")
+                                let url_ =  "forecart"
+                                axios.get(url_).then(function(response_) {
+                                    vue.orderItems = response_.data
                                     vue.$nextTick(function(){
                                         linkDefaultActions()
                                         cartPageRegisterListeners()
                                     })
                                 })
-                            }
-                            else{
+                            }else{
                                 $("#loginModal").modal('show')
+                                $(".loginSubmitButton").click(function(){
+                                    let url =  "forelogin"
+                                    console.log(vue.user)
+                                    if(0 === vue.user.email.length){
+                                        $("span.errorMessage").html("请输入邮箱")
+                                        $("div.loginErrorMessageDiv").css("display","block")
+                                        return
+                                    }
+                                    if(0 === vue.user.password.length){
+                                        $("span.errorMessage").html("请输入密码")
+                                        $("div.loginErrorMessageDiv").css("display","block")
+                                        return
+                                    }
+
+                                    axios.post(url,vue.user).then(function(response) {
+                                        let result = response.data
+                                        if(result.code === 0){
+                                            location.href="cart"
+                                        }
+                                        else{
+                                            $("span.errorMessage").html(result.message)
+                                            $("div.loginErrorMessageDiv").css("display","block")
+                                        }
+                                    })
+                                })
                             }
                         })
 
@@ -43,8 +69,7 @@
         function cartPageRegisterListeners(){
             $("a.deleteOrderItem").click(function(){
                 deleteOrderItem = false
-                let oiid = $(this).attr("oiid")
-                deleteOrderItemid = oiid
+                deleteOrderItemid = $(this).attr("oiid")
                 $("#deleteConfirmModal").modal('show')
             })
             $("button.deleteConfirmButton").click(function(){
@@ -169,14 +194,10 @@
             })
 
             if(selectAny){
-                $("button.createOrderButton").css("background-color","#F08080")
-                $("button.createOrderButton").css("border","1px solid #F08080")
-                $("button.createOrderButton").removeAttr("disabled")
+                $("button.createOrderButton").css("background-color","#F08080").css("border","1px solid #F08080").removeAttr("disabled")
             }
             else{
-                $("button.createOrderButton").css("background-color","#AAAAAA")
-                $("button.createOrderButton").css("border","1px solid #AAAAAA")
-                $("button.createOrderButton").attr("disabled","disabled")
+                $("button.createOrderButton").css("background-color","#AAAAAA").css("border","1px solid #AAAAAA").attr("disabled","disabled")
             }
 
         }
@@ -202,10 +223,10 @@
                 let price =$(".cartProductItemSmallSumPrice[oiid="+oiid+"]").text()
                 price = price.replace(/,/g, "")
                 price = price.replace(/￥/g, "")
-                sum += new Number(price)
+                sum += Number(price)
 
                 let num =$(".orderItemNumberSetting[oiid="+oiid+"]").val()
-                totalNumber += new Number(num)
+                totalNumber += Number(num)
 
             })
 
@@ -226,6 +247,7 @@
                 }
             })
         }
+
     </script>
 
     <title>购物车</title>
@@ -245,7 +267,7 @@
                                 <thead>
                                 <tr>
                                     <th class="selectAndImage">
-                                        <img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png">
+                                        <img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png" alt="">
                                         全选
 
                                     </th>
@@ -305,7 +327,7 @@
         </div>
 
         <div class="cartFoot">
-            <img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png">
+            <img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png" alt="">
             <span>全选</span>
             <!--         <a href="#">删除</a> -->
 

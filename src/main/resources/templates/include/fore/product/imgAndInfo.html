@@ -4,7 +4,8 @@
         function imgAndInfoPageRegisterListeners(vue){
             let stock = vue.p.stock
             $(".productNumberSetting").keyup(function(){
-                let num= $(".productNumberSetting").val()
+                let productNumberSetting = $(".productNumberSetting")
+                let num= productNumberSetting.val()
                 num = parseInt(num)
                 if(isNaN(num))
                     num= 1
@@ -12,22 +13,22 @@
                     num = 1
                 if(num>stock)
                     num = stock
-                $(".productNumberSetting").val(num)
+                productNumberSetting.val(num)
             })
 
             $(".increaseNumber").click(function(){
-                let num= $(".productNumberSetting").val()
+                let num= productNumberSetting.val()
                 num++
                 if(num>stock)
                     num = stock
-                $(".productNumberSetting").val(num)
+                productNumberSetting.val(num)
             })
             $(".decreaseNumber").click(function(){
-                let num= $(".productNumberSetting").val()
+                let num= productNumberSetting.val()
                 --num
                 if(num<=0)
                     num=1
-                $(".productNumberSetting").val(num)
+                productNumberSetting.val(num)
             })
 
             $(".addCartButton").removeAttr("disabled")
@@ -122,9 +123,9 @@
             <ul class="show-area label">
                 <div class="label-bar">{{p.name}}</div>
                 <li>
-                    <img v-if="firstProductImage!=null" :src="'../static/img/productSingle/'+firstProductImage.id+'.jpg'" class="bigImg">
+                    <img v-if="firstProductImage!=null" :src="'img/productSingle/'+firstProductImage.id+'.jpg'" class="bigImg">
                     <div class="smallImageDiv">
-                        <img v-for="pi in p.productSingleImages" :src="'../static/img/productSingle_small/'+pi.id+'.jpg'" :bigImageURL="'../static/img/productSingle/'+pi.id+'.jpg'" class="smallImage">
+                        <img v-for="pi in p.productSingleImages" :src="'img/productSingle_small/'+pi.id+'.jpg'" :bigImageURL="'img/productSingle/'+pi.id+'.jpg'" class="smallImage">
                     </div>
                     <div class="img4load hidden" ></div>
                 </li>

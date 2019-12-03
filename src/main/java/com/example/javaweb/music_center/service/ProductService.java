@@ -96,31 +96,30 @@ public class ProductService {
         if(null == keyword){
             return new ArrayList<>();
         }
-        List<Product> products_ = productDAO.findByNameOrSubTitleLike("%"+keyword+"%","%"+keyword+"%");
-        List<String> words = splitWords(keyword);
-
-//        遍历产品库，计算含有多少个关键词
-        List<Product> products = productDAO.findAll();
-        for (Product product : products){
-            int count = 0;
-            for (String word : words){
-                if (product.getName().contains(word) || product.getSubTitle().contains(word)){
-                    count++;
-                }
-            }
-            product.setContains(count);
-       }
-
-        products.sort(Product::compareTo);
-
-        for (Product product : products){
-//            System.out.println(products_.size() + " " + products_.contains(product));
-            if (products_.size() >= 16 || 0 == product.getContains()) break;
-            if (!products_.contains(product)){
-                products_.add(product);
-            }
-        }
-        return products_;
+        //        List<String> words = splitWords(keyword);
+//
+////        遍历产品库，计算含有多少个关键词
+//        List<Product> products = productDAO.findAll();
+//        for (Product product : products){
+//            int count = 0;
+//            for (String word : words){
+//                if (product.getName().contains(word) || product.getSubTitle().contains(word)){
+//                    count++;
+//                }
+//            }
+//            product.setContains(count);
+//       }
+//
+//        products.sort(Product::compareTo);
+//
+//        for (Product product : products){
+////            System.out.println(products_.size() + " " + products_.contains(product));
+//            if (products_.size() >= 16 || 0 == product.getContains()) break;
+//            if (!products_.contains(product)){
+//                products_.add(product);
+//            }
+//        }
+        return productDAO.findByNameOrSubTitleContaining(keyword,keyword);
     }
 
 }

@@ -25,7 +25,7 @@
                         if(0 === this.user.password.length){
                             $("span.errorMessage").html("请输入密码")
                             $("div.loginErrorMessageDiv").css("display","block")
-                            return;
+                            return
                         }
 
                         axios.post(url,this.user).then(function(response) {

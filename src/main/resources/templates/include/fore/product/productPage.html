@@ -11,7 +11,7 @@
                 reviews:[],
                 showDetail:true,
                 showReview:false,
-                user:{name:'', password:''}
+                user:{email:'', password:''}
             };
             //ViewModel
             let vue = new Vue({
@@ -52,10 +52,6 @@
         });
     </script>
 
-    <title>{{p.name}}</title>
-    <div class="categoryPictureInProductPageDiv">
-        <img v-if="category!=null" class="categoryPictureInProductPage" :src="'img/category/'+category.id+'.jpg'">
-    </div>
     <div class="productPageDiv">
         <div th:replace="include/fore/product/imgAndInfo::html" ></div>
         <div th:replace="include/fore/product/productReview::html" ></div>
