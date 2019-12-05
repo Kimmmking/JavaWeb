@@ -119,7 +119,11 @@ public class ProductService {
 //                products_.add(product);
 //            }
 //        }
-        return productDAO.findByNameOrSubTitleContaining(keyword,keyword);
+
+        List<Product> products = new ArrayList<>();
+        products.addAll(productDAO.findByNameContaining(keyword));
+        products.addAll(productDAO.findBySubTitleContaining(keyword));
+        return products;
     }
 
 }

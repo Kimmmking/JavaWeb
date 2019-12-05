@@ -313,7 +313,7 @@ public class ForeRESTController {
         }
 
         List<Product> ps= productService.search(keyword);
-        productImageService.setFirstProductImages(ps);
+//        productImageService.setFirstProductImages(ps);
         productService.setSaleAndReviewNumber(ps);
         return ps;
     }

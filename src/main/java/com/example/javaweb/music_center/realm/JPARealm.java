@@ -19,8 +19,7 @@ public class JPARealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        SimpleAuthorizationInfo s = new SimpleAuthorizationInfo();
-        return s;
+        return new SimpleAuthorizationInfo();
     }
 
     @Override
@@ -29,8 +28,7 @@ public class JPARealm extends AuthorizingRealm {
         User user = userService.getByEmail(userEmail);
         String passwordInDB = user.getPassword();
         String salt = user.getSalt();
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userEmail, passwordInDB, ByteSource.Util.bytes(salt),
+        return new SimpleAuthenticationInfo(userEmail, passwordInDB, ByteSource.Util.bytes(salt),
                 getName());
-        return authenticationInfo;
     }
 }

@@ -16,6 +16,7 @@
                 methods:{
                     search:function () {
                         let keyword = $("#searchBar").val()
+                        console.log(keyword)
                         let url =  this.uri + "?keyword=" + keyword
                         axios.post(url).then(function(response) {
                             vue.products = response.data
