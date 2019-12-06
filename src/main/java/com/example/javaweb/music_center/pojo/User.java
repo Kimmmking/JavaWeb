@@ -2,12 +2,14 @@
 package com.example.javaweb.music_center.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@Proxy(lazy = false)
 public class User {
 
 	@Id

@@ -2,7 +2,6 @@
 
     <script>
         $(function () {
-            // let keyword = getUrlParms("keyword")
             let data4Vue={
                 uri:'foresearch',
                 products:[]
@@ -16,10 +15,10 @@
                 methods:{
                     search:function () {
                         let keyword = $("#searchBar").val()
-                        console.log(keyword)
                         let url =  this.uri + "?keyword=" + keyword
                         axios.post(url).then(function(response) {
                             vue.products = response.data
+                            console.log(vue.products)
                         })
                     }
                 }

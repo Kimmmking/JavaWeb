@@ -2,6 +2,7 @@ package com.example.javaweb.music_center.pojo;
 
 import com.example.javaweb.music_center.service.OrderService;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
 
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "order_")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@Proxy(lazy = false)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 

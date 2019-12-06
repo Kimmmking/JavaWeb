@@ -22,6 +22,7 @@ public class ProductService {
     @Autowired CategoryService categoryService;
     @Autowired OrderItemService orderItemService;
     @Autowired ReviewService reviewService;
+    @Autowired ProductImageService productImageService;
 
 
     public void add(Product bean) {
@@ -54,23 +55,8 @@ public class ProductService {
     }
     public void fill(Category category) {
         List<Product> products = listByCategory(category);
-        // productImageService.setFirstProdutImages(products);
+        productImageService.setFirstProductImages(products);
         category.setProducts(products);
-    }
-
-    public void fillByRow(List<Category> categorys) {
-        int productNumberEachRow = 4;
-        for (Category category : categorys) {
-            List<Product> products =  category.getProducts();
-            List<List<Product>> productsByRow =  new ArrayList<>();
-            for (int i = 0; i < products.size(); i+=productNumberEachRow) {
-                int size = i+productNumberEachRow;
-                size= Math.min(size, products.size());
-                List<Product> productsOfEachRow =products.subList(i, size);
-                productsByRow.add(productsOfEachRow);
-            }
-            category.setProductsByRow(productsByRow);
-        }
     }
 
     public List<Product> listByCategory(Category category){

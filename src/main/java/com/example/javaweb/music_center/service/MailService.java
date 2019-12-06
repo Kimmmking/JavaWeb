@@ -20,7 +20,6 @@ public class MailService {
     @Autowired
     private JavaMailSenderImpl mailSender;//注入邮件工具类
 
-
     /**
      * 发送邮件
      */
@@ -55,16 +54,10 @@ public class MailService {
     private void sendMimeMail(MailVo mailVo) {
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailSender.createMimeMessage(), true);//true表示支持复杂类型
-//            mailVo.setFrom(getMailSendFrom());//邮件发信人从配置项读取
-//            messageHelper.setFrom(mailVo.getFrom());//邮件发信人
-//            messageHelper.setTo(mailVo.getTo().split(","));//邮件收信人
-            mailVo.setFrom(getMailSendFrom());//邮件发信人从配置项读取
-            messageHelper.setFrom("434407818@qq.com");//邮件发信人
-            messageHelper.setTo("201730621149@mail.scut.edu.cn");
-            messageHelper.setSubject("Test");
-            messageHelper.setText("Test");
-//            messageHelper.setSubject(mailVo.getSubject());//邮件主题
-//            messageHelper.setText(mailVo.getText());//邮件内容
+            messageHelper.setFrom(mailVo.getFrom());//邮件发信人
+            messageHelper.setTo(mailVo.getTo());
+            messageHelper.setSubject("来自Music Center的邮件");
+            messageHelper.setText("感谢您对本店的支持，祝您购物愉快！如有质量问题，请联系客服噢！");
             if (!StringUtils.isEmpty(mailVo.getCc())) {//抄送
                 messageHelper.setCc(mailVo.getCc().split(","));
             }
@@ -92,11 +85,5 @@ public class MailService {
     private MailVo saveMail(MailVo mailVo) {
         //将邮件保存到数据库..
         return mailVo;
-    }
-
-    //获取邮件发信人
-    public String getMailSendFrom() {
-//        return mailSender.getJavaMailProperties().getProperty("from");
-        return "434407818@qq.com";
     }
 }

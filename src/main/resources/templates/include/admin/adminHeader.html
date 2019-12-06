@@ -1,14 +1,14 @@
 <template th:fragment="html" xmlns:th="http://www.w3.org/1999/XSL/Transform">
-    <link rel="stylesheet" href="http://106.12.105.160/javaweb/static/css/back/style.css">
-    <link rel="stylesheet" href="http://106.12.105.160/javaweb/static/css/core-reset.css">
+    <link href="../../../static/css/back/style.css" rel="stylesheet" th:href="@{/css/back/style.css}">
+    <link href="../../../static/css/core-reset.css" rel="stylesheet" th:href="@{/css/core-reset.css}">
+    <script src="../../../static/js/jquery/2.0.0/jquery.min.js" th:src="@{/js/jquery/2.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="http://106.12.105.160/javaweb/static/css/bootstrap/3.3.6/bootstrap.min.css">
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/jquery/2.0.0/jquery.min.js"></script>
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/axios/0.17.1/axios.min.js"></script>
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/vue/2.5.16/vue.min.js"></script>
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/moment/2.22.2/moment.js"></script>
-    <script type="text/javascript" src="http://106.12.105.160/javaweb/static/js/chartjs/chart.min.js"></script>
+    <link href="../../../static/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap/3.3.6/bootstrap.min.css}">
+    <script src="../../../static/js/bootstrap/3.3.6/bootstrap.min.js" th:src="@{/js/bootstrap/3.3.6/bootstrap.min.js}"></script>
+    <script src="../../../static/js/vue/2.5.16/vue.min.js" th:src="@{/js/vue/2.5.16/vue.min.js}"></script>
+    <script src="../../../static/js/axios/0.17.1/axios.min.js" th:src="@{/js/axios/0.17.1/axios.min.js}"></script>
+    <script src="../../../static/js/moment/2.22.2/moment.js" th:src="@{/js/moment/2.22.2/moment.js}"></script>
+    <script type="text/javascript" src="../../../static/js/chartjs/chart.min.js" th:src="@{/js/chartjs/chart.min.js}"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script>
         //判断是否为空

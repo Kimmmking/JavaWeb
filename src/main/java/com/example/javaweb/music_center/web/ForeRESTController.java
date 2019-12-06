@@ -44,7 +44,6 @@ public class ForeRESTController {
     public Object home() {
         List<Category> cs= categoryService.list();
         productService.fill(cs);
-        productService.fillByRow(cs);
         categoryService.removeCategoryFromProduct(cs);
         return cs;
     }
@@ -96,11 +95,7 @@ public class ForeRESTController {
     }
 
     @GetMapping("/forecheckLogin")
-    public Object checkLogin(HttpSession session) {
-//        User user =(User)session.getAttribute("user");
-//        if(null!=user)
-//            return Result.success();
-//        return Result.fail("未登录");
+    public Object checkLogin() {
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated())
             return Result.success();
@@ -163,15 +158,6 @@ public class ForeRESTController {
         return c;
     }
 
-//    @PostMapping("foresearch")
-//    public Object search( String keyword){
-//        if(null==keyword)
-//            keyword = "";
-//        List<Product> ps= productService.search(keyword,0,20);
-//        productImageService.setFirstProdutImages(ps);
-//        productService.setSaleAndReviewNumber(ps);
-//        return ps;
-//    }
 
     @GetMapping("forebuyone")
     public Object buyone(int pid, int num, HttpSession session) {
@@ -313,7 +299,7 @@ public class ForeRESTController {
         }
 
         List<Product> ps= productService.search(keyword);
-//        productImageService.setFirstProductImages(ps);
+        productImageService.setFirstProductImages(ps);
         productService.setSaleAndReviewNumber(ps);
         return ps;
     }

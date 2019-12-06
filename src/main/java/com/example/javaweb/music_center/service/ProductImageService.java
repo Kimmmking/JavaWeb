@@ -55,5 +55,4 @@ public class ProductImageService {
             setFirstProductImage(orderItem.getProduct());
         }
     }
-
 }

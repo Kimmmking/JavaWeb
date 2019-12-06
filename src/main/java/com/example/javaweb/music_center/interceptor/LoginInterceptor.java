@@ -16,37 +16,24 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = httpServletRequest.getSession();
         String contextPath = session.getServletContext().getContextPath();
         String[] requireAuthPages = new String[]{
-                "buy",
-                "pay",
-                "payed",
-                "cart",
-                // "bought",
-                "confirmPay",
-                // "orderConfirmed",
-                "forebuyone",
-                "forebuy",
-                "foreaddCart",
-                "forecart",
-                "forechangeOrderItem",
-                "foredeleteOrderItem",
-                "forecreateOrder",
-                "forepayed",
-                "forebought",
-                "foreconfirmPay",
-                "foreorderConfirmed",
-                "foredeleteOrder"
-//                "forereview",
-//                "foredoreview"
+                "adminchart",
+                "categories",
+                "products",
+                "properties",
+                "propertyValues",
+                "orders",
+                "productImages",
+                "users"
         };
         String uri = httpServletRequest.getRequestURI();
         uri = StringUtils.remove(uri,contextPath+"/");
         String page = uri;
 
         if(beginWith(page,requireAuthPages)){
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("admin");
             if(user == null){
                 try {
-                    httpServletResponse.sendRedirect("login");
+                    httpServletResponse.sendRedirect("adminlogin");
                     return false;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -58,6 +45,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private boolean beginWith(String page, String[] requireAuthPages){
         boolean result = false;
+        for (String requiredAuthPage : requireAuthPages) {
+            if(StringUtils.startsWith(page, requiredAuthPage)) {
+                result = true;
+                break;
+            }
+        }
         return result;
     }
 

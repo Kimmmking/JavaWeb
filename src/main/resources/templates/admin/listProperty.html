@@ -20,10 +20,20 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-                this.getCategory(cid);
-                this.list(0);
+                this.checklogin()
             },
             methods: {
+                checklogin:function(){
+                    let url = "admincheckLogin"
+                    axios.get(url).then(function(response) {
+                        if(0 === response.data.code){
+                            vue.getCategory(cid)
+                            vue.list(0)
+                        }else{
+                            location.href="adminlogin"
+                        }
+                    })
+                },
                 getCategory:function(cid){
                     let url = "categories/"+cid;
                     axios.get(url).then(function(response) {

@@ -20,9 +20,19 @@
                 el:"#workingArea",
                 data:data4Vue,
                 mounted:function () {
-                    this.load()
+                   this.checklogin()
                 },
                 methods:{
+                    checklogin:function(){
+                        let url = "admincheckLogin"
+                        axios.get(url).then(function(response) {
+                                if(0 === response.data.code){
+                                    vue.load()
+                                }else{
+                                    location.href="adminlogin"
+                                }
+                        })
+                    },
                     load:function () {
                         let url = "categories/saleinfo"
                         axios.get(url).then(response =>{

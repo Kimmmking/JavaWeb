@@ -8,6 +8,7 @@ import com.example.javaweb.music_center.service.ProductService;
 import com.example.javaweb.music_center.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,16 +49,20 @@ public class ProductImageController {
         Product product = productService.get(pid);
         bean.setProduct(product);
         bean.setType(type);
-
         productImageService.add(bean);
-        String folder = "img/";
+
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        if(!path.exists()) {
+            path = new File("");
+        }
+        String folder = "webapp/img/";
         if(ProductImageService.type_single.equals(bean.getType())){
             folder +="productSingle";
         }
         else{
             folder +="productDetail";
         }
-        File  imageFolder= new File(request.getServletContext().getRealPath(folder));
+        File imageFolder= new File(path.getAbsolutePath(),folder);
         File file = new File(imageFolder,bean.getId()+".jpg");
         String fileName = file.getName();
         if(!file.getParentFile().exists())
@@ -72,9 +77,9 @@ public class ProductImageController {
         }
 
         if(ProductImageService.type_single.equals(bean.getType())){
-            String imageFolder_small= request.getServletContext().getRealPath("img/productSingle_small");
-            String imageFolder_middle= request.getServletContext().getRealPath("img/productSingle_middle");
-            File f_small = new File(imageFolder_small, fileName);
+            String imageFolder_small= "/webapp/img/productSingle_small";
+            String imageFolder_middle= "/webapp/img/productSingle_middle";
+            File f_small = new File(path.getAbsolutePath() + imageFolder_small, fileName);
             File f_middle = new File(imageFolder_middle, fileName);
             f_small.getParentFile().mkdirs();
             f_middle.getParentFile().mkdirs();
@@ -90,21 +95,26 @@ public class ProductImageController {
         ProductImage bean = productImageService.get(id);
         productImageService.delete(id);
 
-        String folder = "img/";
-        if(ProductImageService.type_single.equals(bean.getType()))
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        if(!path.exists()) {
+            path = new File("");
+        }
+        String folder = "webapp/img/";
+        if(ProductImageService.type_single.equals(bean.getType())){
             folder +="productSingle";
-        else
+        }
+        else{
             folder +="productDetail";
-
-        File imageFolder= new File(request.getServletContext().getRealPath(folder));
+        }
+        File imageFolder= new File(path.getAbsolutePath(),folder);
         File file = new File(imageFolder,bean.getId()+".jpg");
         String fileName = file.getName();
         file.delete();
         if(ProductImageService.type_single.equals(bean.getType())){
-            String imageFolder_small= request.getServletContext().getRealPath("img/productSingle_small");
-            String imageFolder_middle= request.getServletContext().getRealPath("img/productSingle_middle");
-            File f_small = new File(imageFolder_small, fileName);
-            File f_middle = new File(imageFolder_middle, fileName);
+            String imageFolder_small= "/webapp/img/productSingle_small";
+            String imageFolder_middle= "/webapp/img/productSingle_middle";
+            File f_small = new File(path.getAbsolutePath() + imageFolder_small, fileName);
+            File f_middle = new File(path.getAbsolutePath() + imageFolder_middle, fileName);
             f_small.delete();
             f_middle.delete();
         }

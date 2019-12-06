@@ -5,6 +5,7 @@ import com.example.javaweb.music_center.pojo.Product;
 import com.example.javaweb.music_center.service.CategoryService;
 import com.example.javaweb.music_center.service.OrderItemService;
 import com.example.javaweb.music_center.service.ProductService;
+import com.example.javaweb.music_center.util.ImageUtil;
 import com.example.javaweb.music_center.util.Page4Navigator;
 import com.example.javaweb.music_center.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,11 @@ public class CategoryController {
     @PostMapping("/categories")
     public Object add(Category bean, HttpServletRequest request) throws Exception {
         categoryService.add(bean);
-        // saveOrUpdateImageFile(bean, image, request);
+//         saveOrUpdateImageFile(bean, image, request);
         return bean;
     }
 
-//    public void saveOrUpdateImageFile(Category bean, MultipartFile image, HttpServletRequest request)
+//    private void saveOrUpdateImageFile(Category bean, MultipartFile image, HttpServletRequest request)
 //            throws IOException {
 //        File imageFolder= new File(request.getServletContext().getRealPath("img/category"));
 //        File file = new File(imageFolder,bean.getId()+".jpg");

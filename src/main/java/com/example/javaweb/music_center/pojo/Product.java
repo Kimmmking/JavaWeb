@@ -1,6 +1,7 @@
 package com.example.javaweb.music_center.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer"})
+@Proxy(lazy = false)
 public class Product implements Comparable<Product>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 <div th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
     <script>
         $(function(){
-            let pid = getUrlParms("pid");
+            let pid = getUrlParms("pid")
             let data4Vue = {
                 uri:'foreproduct',
                 p:'',
@@ -12,44 +12,44 @@
                 showDetail:true,
                 showReview:false,
                 user:{email:'', password:''}
-            };
+            }
             //ViewModel
             let vue = new Vue({
                 el: '#workingArea',
                 data: data4Vue,
                 mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-                    linkDefaultActions();
-                    this.load();
+                    linkDefaultActions()
+                    this.load()
                 },
                 methods: {
                     load:function(){
                         let url =  this.uri+"/"+pid;
                         axios.get(url).then(function(response) {
-                            let result = response.data;
-                            vue.p=result.data.product;
-                            vue.pvs=result.data.pvs;
-                            vue.reviews=result.data.reviews;
+                            let result = response.data
+                            vue.p=result.data.product
+                            vue.pvs=result.data.pvs
+                            vue.reviews=result.data.reviews
 
-                            vue.category = vue.p.category;
-                            vue.firstProductImage = vue.p.firstProductImage;
+                            vue.category = vue.p.category
+                            vue.firstProductImage = vue.p.firstProductImage
                             vue.$nextTick(function(){
-                                imgAndInfoPageRegisterListeners(vue);
+                                imgAndInfoPageRegisterListeners(vue)
                             })
-                        });
+                        })
 
                     },
                     toggle2Detail:function(){
-                        this.showDetail=true;
-                        this.showReview=false;
+                        this.showDetail=true
+                        this.showReview=false
                     },
                     toggle2Review:function(){
-                        this.showDetail=false;
-                        this.showReview=true;
+                        this.showDetail=false
+                        this.showReview=true
                     }
                 }
-            });
+            })
 
-        });
+        })
     </script>
 
     <div class="productPageDiv">

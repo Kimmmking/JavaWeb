@@ -64,13 +64,5 @@ public class CategoryService {
             }
         }
 
-        List<List<Product>> productsByRow = category.getProductsByRow();
-        if(null != productsByRow) {
-            for (List<Product> ps : productsByRow) {
-                for (Product p: ps) {
-                    p.setCategory(null);
-                }
-            }
-        }
     }
 }

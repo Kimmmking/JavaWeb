@@ -18,9 +18,19 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-                this.list(0)
+                this.checklogin()
             },
             methods: {
+                checklogin:function(){
+                    let url = "admincheckLogin"
+                    axios.get(url).then(function(response) {
+                        if(0 === response.data.code){
+                            vue.list(0)
+                        }else{
+                            location.href="adminlogin"
+                        }
+                    })
+                },
                 list:function(start){
                     let url =  this.uri+ "?start="+start
                     axios.get(url).then(function(response) {

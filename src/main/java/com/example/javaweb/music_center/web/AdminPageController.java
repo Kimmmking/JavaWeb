@@ -64,4 +64,9 @@ public class AdminPageController {
     public String showChart(){
         return "admin/chartShow";
     }
+
+    @GetMapping(value = "/adminlogin")
+    public String login(){
+        return "admin/adminLogin";
+    }
 }

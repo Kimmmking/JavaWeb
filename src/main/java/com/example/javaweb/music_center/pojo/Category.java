@@ -1,6 +1,7 @@
 package com.example.javaweb.music_center.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@Proxy(lazy = false)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +21,6 @@ public class Category {
     @Transient
     private
     List<Product> products;
-    @Transient
-    private
-    List<List<Product>> productsByRow; // 为了在首页竖状导航的分类名称右边显示推荐产品列表
 
     public int getId() {
         return id;
@@ -46,15 +45,7 @@ public class Category {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-
-    public List<List<Product>> getProductsByRow() {
-        return productsByRow;
-    }
-
-    public void setProductsByRow(List<List<Product>> productsByRow) {
-        this.productsByRow = productsByRow;
-    }
-
+    
     @Override
     public String toString() {
         return "Category [id=" + id + ", name=" + name + "]";
