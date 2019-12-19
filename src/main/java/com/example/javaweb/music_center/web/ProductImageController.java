@@ -80,7 +80,7 @@ public class ProductImageController {
             String imageFolder_small= "/webapp/img/productSingle_small";
             String imageFolder_middle= "/webapp/img/productSingle_middle";
             File f_small = new File(path.getAbsolutePath() + imageFolder_small, fileName);
-            File f_middle = new File(imageFolder_middle, fileName);
+            File f_middle = new File(path.getAbsolutePath() + imageFolder_middle, fileName);
             f_small.getParentFile().mkdirs();
             f_middle.getParentFile().mkdirs();
             ImageUtil.resizeImage(file, 56, 56, f_small);

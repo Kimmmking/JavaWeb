@@ -72,4 +72,7 @@ public class OrderItemService {
     }
 
 
+    public List<OrderItem> getAll() {
+        return orderItemDAO.findAll();
+    }
 }

@@ -13,7 +13,7 @@
                 name:[],
                 saleCount:[],
                 dateName:[],
-                dailySale:[]
+                saleInfo:[]
             }
 
             let vue = new Vue({
@@ -39,8 +39,7 @@
                             let result = response.data
                             vue.categories = result.data.categories
                             vue.saleCount = result.data.saleCount
-                            vue.dailySale = result.data.dailySale
-                            vue.dateName = result.data.dateName
+                            vue.saleInfo = result.data.saleInfo
                             for( let n in vue.categories){
                                 vue.name.push(vue.categories[n].name)
                             }
@@ -69,14 +68,14 @@
                                 }
                             }
                         })
-                        let cxt_ = $("#dailySaleChart").get(0).getContext("2d")
+                        let cxt_ = $("#SaleChart").get(0).getContext("2d")
                         let dailySaleChart = new Chart(cxt_,{
                             type:'line',
                             data:{
-                                labels: vue.dateName,
+                                labels: vue.name,
                                 datasets:[{
-                                    label: '近一个月的销售额',
-                                    data: vue.dailySale,
+                                    label: '各分类销售额',
+                                    data: vue.saleInfo,
                                     borderColor:'blue',
                                     borderWidth: 1,
                                     fill: false
@@ -104,7 +103,7 @@
         <canvas id="categoryChart"></canvas>
     </div>
     <div class="chartDIV">
-        <canvas id="dailySaleChart"></canvas>
+        <canvas id="SaleChart"></canvas>
     </div>
 </div>
 

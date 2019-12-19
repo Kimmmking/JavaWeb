@@ -9,8 +9,7 @@
         let data4Vue = {
             uri: 'categories',
             listURL:'admin_category_list',
-            bean: { id: 0, name: '', hp: '0'},
-            file:''
+            bean: { id: 0, name: '', hp: '0'}
         }
 
         //ViewModel
@@ -43,15 +42,11 @@
                         return
                     let url = this.uri + "/" + this.bean.id
 
-                    //axios.js 上传文件要用 formData 这种方式
                     let formData = new FormData()
                     formData.append("name", this.bean.name)
                     axios.post(url,formData).then(function(response){
                         location.href = vue.listURL
                     })
-                },
-                getFile: function (event) {
-                    this.file = event.target.files[0]
                 }
             }
         })
@@ -67,14 +62,7 @@
                     <td>分类名称</td>
                     <td><input @keyup.enter="update" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <td>分类图片</td>-->
-<!--                    <td>-->
-<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
-<!--                    </td>-->
-<!--                </tr>-->
             </table>
-            <input type="hidden" name="id"  v-model.trim="bean.id" >
             <a href="#" class="btn btn-success" @click="update">提 交</a>
         </div>
     </div>

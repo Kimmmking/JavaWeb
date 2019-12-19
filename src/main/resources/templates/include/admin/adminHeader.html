@@ -15,38 +15,38 @@
         function checkEmpty(value,text){
 
             if(null === value || value.length === 0){
-                alert(text+ "不能为空");
-                return false;
+                alert(text+ "不能为空")
+                return false
             }
-            return true;
+            return true
         }
 
         //获取地址栏参数的函数
         function getUrlParms(para){
-            let search=location.search; //页面URL的查询部分字符串
-            let arrPara=[]; //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
-            let arrVal=[]; //参数值数组。用于存储查找到的参数值
+            let search=location.search //页面URL的查询部分字符串
+            let arrPara=[] //参数数组。数组单项为包含参数名和参数值的字符串，如“para=value”
+            let arrVal=[] //参数值数组。用于存储查找到的参数值
 
             if(search !== ""){
-                let index=0;
-                search=search.substr(1); //去除开头的“?”
-                arrPara=search.split("&");
+                let index=0
+                search=search.substr(1) //去除开头的“?”
+                arrPara=search.split("&")
 
                 for(i in arrPara){
                     let paraPre=para+"="; //参数前缀。即参数名+“=”，如“para=”
                     if(arrPara[i].indexOf(paraPre) === 0&& paraPre.length<arrPara[i].length){
-                        arrVal[index]=decodeURI(arrPara[i].substr(paraPre.length)); //顺带URI解码避免出现乱码
-                        index++;
+                        arrVal[index]=decodeURI(arrPara[i].substr(paraPre.length)) //顺带URI解码避免出现乱码
+                        index++
                     }
                 }
             }
 
             if(arrVal.length === 1){
-                return arrVal[0];
+                return arrVal[0]
             }else if(arrVal.length === 0){
-                return null;
+                return null
             }else{
-                return arrVal;
+                return arrVal
             }
         }
 
@@ -54,52 +54,52 @@
         function checkNumber(value, text){
 
             if(value.length === 0){
-                alert(text+ "不能为空");
-                return false;
+                alert(text+ "不能为空")
+                return false
             }
             if(isNaN(value)){
-                alert(text+ "必须是数字");
-                return false;
+                alert(text+ "必须是数字")
+                return false
             }
-            return true;
+            return true
         }
         //判断是否整数
         function checkInt(value, text){
 
             if(value.length === 0){
-                alert(text+ "不能为空");
-                return false;
+                alert(text+ "不能为空")
+                return false
             }
             if(parseInt(value) !== value){
-                alert(text+ "必须是整数");
-                return false;
+                alert(text+ "必须是整数")
+                return false
             }
-            return true;
+            return true
         }
 
         //确实是否要删除
         function checkDeleteLink(){
-            return confirm("确认要删除");
+            return confirm("确认要删除")
 
         }
         //跳转函数
         function jump(page,vue){
             if('first' === page && !vue.pagination.first)
-                vue.list(0);
+                vue.list(0)
 
             else if('pre' === page &&	vue.pagination.hasPrevious )
-                vue.list(vue.pagination.number-1);
+                vue.list(vue.pagination.number-1)
 
             else if('next' === page && vue.pagination.hasNext)
-                vue.list(vue.pagination.number+1);
+                vue.list(vue.pagination.number+1)
 
             else if('last' === page && !vue.pagination.last)
-                vue.list(vue.pagination.totalPages-1);
+                vue.list(vue.pagination.totalPages-1)
         }
         //跳转函数
         function jumpByNumber(start,vue){
             if(start !== vue.pagination.number)
-                vue.list(start);
+                vue.list(start)
         }
     </script>
 

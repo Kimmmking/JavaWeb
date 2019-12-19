@@ -5,33 +5,33 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public class Page4Navigator<T> {
-    Page<T> pageFromJPA;
+    private Page<T> pageFromJPA;
 
-    int navigatePages;
+    private int navigatePages;
      
-    int totalPages;
+    private int totalPages;
  
-    int number;
+    private int number;
      
-    long totalElements;
+    private long totalElements;
      
-    int size;
+    private int size;
  
-    int numberOfElements;
+    private int numberOfElements;
  
-    List<T> content;
+    private List<T> content;
  
-    boolean isHasContent;
+    private boolean isHasContent;
  
-    boolean first;
+    private boolean first;
  
-    boolean last;
+    private boolean last;
      
-    boolean isHasNext;
+    private boolean isHasNext;
  
-    boolean isHasPrevious;
+    private boolean isHasPrevious;
      
-    int[] navigatepageNums;
+    private int[] navigatepageNums;
      
     public Page4Navigator() {
         //这个空的分页是为了 Redis 从 json格式转换为 Page4Navigator 对象而专门提供的
@@ -69,7 +69,7 @@ public class Page4Navigator<T> {
     }
  
     private void calcNavigatepageNums() {
-        int navigatepageNums[];
+        int[] navigatepageNums;
         int totalPages = getTotalPages();
         int num = getNumber();
         //当总页数小于或等于导航页码数时

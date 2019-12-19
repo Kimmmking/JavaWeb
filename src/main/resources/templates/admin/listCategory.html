@@ -9,8 +9,7 @@
             uri:'categories',
             beans: [],
             bean: { id: 0, name: ''},
-            pagination:{},
-            file: null
+            pagination:{}
         }
 
         //ViewModel
@@ -41,19 +40,13 @@
                 add: function () {
                     if(!checkEmpty(this.bean.name, "分类名称"))
                         return
-                    // if(!checkEmpty(this.file, "分类图片"))
-                    //     return
                     let url = this.uri
-
-                    //axios.js 上传文件要用 formData 这种方式
                     let formData = new FormData()
-                    // formData.append("image", this.file)
                     formData.append("name", this.bean.name)
                     axios.post(url,formData).then(function(response){
                         vue.list(0)
                         vue.bean = { id: 0, name: '', hp: '0'}
                         $("#categoryPic").val('')
-                        vue.file = null
                     })
                 },
                 deleteBean: function (id) {
@@ -68,9 +61,6 @@
                             vue.list(0)
                         }
                     })
-                },
-                getFile: function (event) {
-                    this.file = event.target.files[0]
                 },
                 jump: function(page){
                     jump(page,vue) //定义在adminHeader.html 中
@@ -94,7 +84,6 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-<!--                                <th>图片</th>-->
                                 <th>分类名称</th>
                                 <th>属性管理</th>
                                 <th>产品管理</th>
@@ -105,9 +94,6 @@
                             <tbody>
                                 <tr v-for="bean in beans ">
                                     <td>{{bean.id}}</td>
-<!--                                    <td>-->
-<!--                                        <img height="40px" :src="'img/category/'+bean.id+'.jpg'" alt="">-->
-<!--                                    </td>-->
                                     <td>{{bean.name}}</td>
                                     <td>
                                         <a :href="'admin_property_list?cid=' + bean.id "><button>属性管理</button></a>
@@ -140,12 +126,6 @@
                     <td>分类名称</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <td>分类图片</td>-->
-<!--                    <td>-->
-<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
-<!--                    </td>-->
-<!--                </tr>-->
             </table>
             <a href="#"  @click="add" class="btn btn-success">提交</a>
         </div>

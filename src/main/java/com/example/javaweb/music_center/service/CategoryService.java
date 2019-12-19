@@ -42,12 +42,10 @@ public class CategoryService {
         return new Page4Navigator<Category>(pageFromJPA,navigatePages);
     }
 
-//    @Cacheable(key="'categories-all'")
     public List<Category> list() {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         return categoryDAO.findAll(sort);
     }
-
 
     public void removeCategoryFromProduct(List<Category> cs) {
         for (Category category : cs) {
@@ -55,8 +53,7 @@ public class CategoryService {
         }
     }
 
-    public
-    void removeCategoryFromProduct(Category category) {
+    public void removeCategoryFromProduct(Category category) {
         List<Product> products = category.getProducts();
         if(null != products) {
             for (Product product : products) {

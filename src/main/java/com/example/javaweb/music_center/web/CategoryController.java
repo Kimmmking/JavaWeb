@@ -1,6 +1,7 @@
 package com.example.javaweb.music_center.web;
 
 import com.example.javaweb.music_center.pojo.Category;
+import com.example.javaweb.music_center.pojo.OrderItem;
 import com.example.javaweb.music_center.pojo.Product;
 import com.example.javaweb.music_center.service.CategoryService;
 import com.example.javaweb.music_center.service.OrderItemService;
@@ -8,6 +9,7 @@ import com.example.javaweb.music_center.service.ProductService;
 import com.example.javaweb.music_center.util.ImageUtil;
 import com.example.javaweb.music_center.util.Page4Navigator;
 import com.example.javaweb.music_center.util.Result;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +44,6 @@ public class CategoryController {
     @PostMapping("/categories")
     public Object add(Category bean, HttpServletRequest request) throws Exception {
         categoryService.add(bean);
-//         saveOrUpdateImageFile(bean, image, request);
         return bean;
     }
 
@@ -58,11 +59,8 @@ public class CategoryController {
 //    }
 
     @DeleteMapping("/categories/{id}")
-    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
+    public String delete(@PathVariable("id") int id)  throws Exception {
         categoryService.delete(id);
-//        File  imageFolder= new File(request.getServletContext().getRealPath("img/category"));
-//        File file = new File(imageFolder,id+".jpg");
-//        file.delete();
         return null;
     }
 
@@ -76,22 +74,21 @@ public class CategoryController {
         String name = request.getParameter("name");
         bean.setName(name);
         categoryService.update(bean);
-
-//        if(image!=null) {
-//            saveOrUpdateImageFile(bean, image, request);
-//        }
         return bean;
     }
 
     @GetMapping("/categories/saleinfo")
     public Object get4chart(){
+
         List<Category> categories = categoryService.list();
         List<Integer> saleCount = new ArrayList<>();
 
-        List<String> dateName = new ArrayList<>();
-        List<Float> dailySale = new ArrayList<>();
 
+        List<OrderItem> orderItems = orderItemService.getAll();
+        float[] saleAmount = new float[4];
+        int num = 0;
         for(Category category : categories){
+            saleAmount[num++] = 0;
             int count = 0;
             List<Product> products = productService.listByCategory(category);
             for(Product product : products){
@@ -100,9 +97,40 @@ public class CategoryController {
             saleCount.add(count);
         }
 
+
+        for(OrderItem orderItem : orderItems){
+            if(orderItem.getOrder() == null || "delete".equals(orderItem.getOrder().getStatus()) || "waitPay".equals(orderItem.getOrder().getStatus())){
+            }else{
+                Product product = orderItem.getProduct();
+                float price = product.getPromotePrice();
+                int count = orderItem.getNumber();
+                switch (product.getCategory().getName()){
+                    case "内地榜":
+                        saleAmount[0] += (price * count);
+                        break;
+                    case "香港榜":
+                        saleAmount[1] += (price * count);
+                        break;
+                    case "台湾榜":
+                        saleAmount[2] += (price * count);
+                        break;
+                    case "欧美榜":
+                        saleAmount[3] += (price * count);
+                        break;
+                }
+            }
+        }
+
+        List<Float> saleInfo = new ArrayList<>();
+
+        for(int i=0; i<num;){
+            saleInfo.add(saleAmount[i++]);
+        }
+
         Map<String,Object> map= new HashMap<>();
         map.put("categories", categories);
         map.put("saleCount", saleCount);
+        map.put("saleInfo", saleInfo);
 
         return Result.success(map);
 
