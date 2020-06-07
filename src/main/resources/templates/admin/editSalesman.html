@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="include/admin/adminHeader::html" ></head>
+<body>
+<div th:replace="include/admin/adminNavigator::html" ></div>
+<script>
+    $(function(){
+        let data4Vue = {
+            uri: 'salesman',
+            listURL:'admin_salesman_list',
+            bean: { id: 0, name: '', password: ''}
+        }
+
+        //ViewModel
+        let vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                this.get()
+            },
+            methods: {
+                get:function(){
+                    let id = getUrlParms("id")
+                    let url = this.uri + "/" + id
+                    axios.get(url).then(function(response) {
+                        vue.bean = response.data
+                    })
+                },
+                update:function () {
+                    if(!checkEmpty(this.bean.password, "密码不为空"))
+                        return;
+                    let url = this.uri + "/" + this.bean.id;
+
+                    axios.post(url, this.bean).then(function(response){
+                        location.href = vue.listURL
+                    })
+                }
+            }
+        })
+    })
+</script>
+
+<div id="workingArea">
+    <div class="panel panel-warning editDiv">
+        <div class="panel-heading">编辑店员密码</div>
+        <div class="panel-body">
+            <table class="editTable">
+                <tr>
+                    <td>{{bean.name}}</td>
+                </tr>
+                <tr>
+                    <td>分类名称</td>
+                    <td><input @keyup.enter="update" v-model.trim="bean.password" type="text" class="form-control"></td>
+                </tr>
+            </table>
+            <input type="hidden" name="id"  v-model.trim="bean.id" >
+            <a href="#" class="btn btn-success" @click="update">提 交</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="include/admin/adminFooter::html" ></div>
+</body>
+</html>

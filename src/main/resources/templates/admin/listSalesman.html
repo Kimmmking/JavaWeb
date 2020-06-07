@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="include/admin/adminHeader::html" ></head>
+<body>
+<div th:replace="include/admin/adminNavigator::html" ></div>
+<script>
+    $(function(){
+
+        let data4Vue = {
+            uri:'salesman',
+            beans: [],
+            bean: { name:'', password:''},
+            pagination:{}
+        };
+
+        //ViewModel
+        let vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                this.list(0);
+            },
+            methods: {
+                list:function(start){
+                    let url =  this.uri+ "?start="+start;
+                    axios.get(url).then(function(response) {
+                        vue.pagination = response.data;
+                        if(vue.pagination == null){
+                            alert("没有权限！")
+                        }else {
+                            vue.beans = response.data.content;
+                        }
+                    });
+                },
+                jump: function(page){
+                    jump(page,vue); //定义在adminHeader.html 中
+                },
+                jumpByNumber: function(start){
+                    jumpByNumber(start,vue);
+                },
+                add: function () {
+                    if(!checkEmpty(this.bean.name, "店员名称"))
+                        return
+                    if(!checkEmpty(this.bean.password, "密码"))
+                        return
+                    let url = this.uri
+
+                    axios.post(url,this.bean).then(function(){
+                        vue.list(0)
+                        vue.bean = { name: '', password: ''}
+                    })
+                },
+                deleteBean: function (id) {
+                    if(!checkDeleteLink())
+                        return
+                    let url = this.uri + "/" + id
+                    axios.delete(url).then(function(response){
+                        if(0 !== response.data.length){
+                            alert(response.data)
+                        }
+                        else{
+                            vue.list(0)
+                        }
+                    })
+                }
+            }
+        });
+    });
+
+</script>
+
+<div id="workingArea" >
+    <div class="listDataTableDiv">
+        <h1 class="label label-info" >店员管理</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>店员姓名</th>
+                                <th>店员密码</th>
+                                <th>编辑</th>
+                                <th>删除</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="bean in beans ">
+                                <td>{{bean.id}}</td>
+                                <td>{{bean.name}}</td>
+                                <td>{{bean.password}}</td>
+                                <td>
+                                    <a :href="'admin_salesman_edit?id=' + bean.id "><button>编辑</button></a>
+                                </td>
+                                <td>
+                                    <a href="#" @click="deleteBean(bean.id)"><button>删除</button></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="include/admin/adminPage::html" ></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="panel panel-warning addDiv">
+        <div class="panel-heading">新增店员</div>
+        <div class="panel-body">
+            <table class="addTable">
+                <tr>
+                    <td>店员名称</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.password" type="text" class="form-control"></td>
+                </tr>
+            </table>
+            <a href="#"  @click="add" class="btn btn-success">提交</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="include/admin/adminFooter::html" ></div>
+</body>
+</html>
