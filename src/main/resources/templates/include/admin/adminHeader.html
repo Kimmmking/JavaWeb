@@ -101,6 +101,12 @@
             if(start !== vue.pagination.number)
                 vue.list(start)
         }
+
+        function logout() {
+            axios.get("adminlogout").then(function() {
+                location.href = "admin_login"
+            })
+        }
     </script>
 
 </template>
