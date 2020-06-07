@@ -21,6 +21,10 @@
                     linkDefaultActions()
                     this.load()
                 },
+                destroy:function(){
+                    let url =  "usertime" + "/" + pid;
+                    axios.post(url, this.seconds);
+                },
                 methods: {
                     load:function(){
                         let url =  this.uri+"/"+pid;
