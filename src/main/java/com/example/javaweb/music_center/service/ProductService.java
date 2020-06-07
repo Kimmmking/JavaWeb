@@ -3,6 +3,7 @@ package com.example.javaweb.music_center.service;
 import com.example.javaweb.music_center.dao.ProductDAO;
 import com.example.javaweb.music_center.pojo.Category;
 import com.example.javaweb.music_center.pojo.Product;
+import com.example.javaweb.music_center.pojo.Salesman;
 import com.example.javaweb.music_center.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -41,11 +43,18 @@ public class ProductService {
         productDAO.save(bean);
     }
 
-    public Page4Navigator<Product> list(int cid, int start, int size, int navigatePages){
+    public Page4Navigator<Product> list(int cid, int start, int size, int navigatePages, HttpSession session){
+        Salesman salesman = (Salesman) session.getAttribute("salesman");
         Category category = categoryService.get(cid);
         Sort sort = new Sort(Sort.Direction.ASC,"id");
         Pageable pageable = new PageRequest(start,size,sort);
-        Page<Product> pageFromJPA = productDAO.findByCategory(category,pageable);
+        Page<Product> pageFromJPA;
+        if(salesman.getId() != 1){
+            pageFromJPA = productDAO.findBySalesmanAndCategory(salesman,category,pageable);
+        }else {
+            pageFromJPA = productDAO.findByCategory(category,pageable);
+        }
+
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
     public void fill(List<Category> categorys) {

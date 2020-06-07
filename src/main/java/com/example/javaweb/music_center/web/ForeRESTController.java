@@ -1,6 +1,8 @@
 package com.example.javaweb.music_center.web;
 
 import com.example.javaweb.music_center.comparator.*;
+import com.example.javaweb.music_center.dao.History1DAO;
+import com.example.javaweb.music_center.dao.History2DAO;
 import com.example.javaweb.music_center.pojo.*;
 import com.example.javaweb.music_center.service.*;
 import com.example.javaweb.music_center.util.Result;
@@ -39,6 +41,10 @@ public class ForeRESTController {
     OrderItemService orderItemService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    History1DAO history1DAO;
+    @Autowired
+    History2DAO history2DAO;
 
     @GetMapping("/forehome")
     public Object home() {
@@ -85,7 +91,13 @@ public class ForeRESTController {
         try {
             subject.login(token);
             User user = userService.getByEmail(email);
-//	    	subject.getSession().setAttribute("user", user);
+            History1 history1 = new History1();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            String time = df.format(new Date());
+            history1.setTime(time);
+            history1.setUser(user);
+            history1.setOperate("login");
+            history1DAO.save(history1);
             session.setAttribute("user", user);
             return Result.success();
         } catch (AuthenticationException e) {
@@ -312,5 +324,14 @@ public class ForeRESTController {
         List<Order> os= orderService.listByUserWithoutDelete(user);
         orderService.removeOrderFromOrderItem(os);
         return os;
+    }
+
+    @PostMapping("usertime/{pid}")
+    public void userTime(@PathVariable("pid") int pid, @RequestParam(name = "seconds") int seconds, HttpSession session){
+        History2 history2 = new History2();
+        history2.setDuration(seconds);
+        history2.setPid(pid);
+        history2.setUser((User)session.getAttribute("user"));
+        history2DAO.save(history2);
     }
 }

@@ -21,6 +21,10 @@ public class Product implements Comparable<Product>{
     @JoinColumn(name="cid")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name="sid")
+    private Salesman salesman;
+
     //自动关联到表对应的同名字段
     private String name;
     private String subTitle;
@@ -42,6 +46,15 @@ public class Product implements Comparable<Product>{
 
     @Transient
     private int contains;
+
+
+    public Salesman getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(Salesman salesman) {
+        this.salesman = salesman;
+    }
 
     public int getId() {
         return id;

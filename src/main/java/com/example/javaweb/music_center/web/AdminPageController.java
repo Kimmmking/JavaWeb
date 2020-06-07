@@ -1,13 +1,30 @@
 package com.example.javaweb.music_center.web;
 
+import com.example.javaweb.music_center.dao.History3DAO;
+import com.example.javaweb.music_center.pojo.History3;
+import com.example.javaweb.music_center.pojo.History4;
+import com.example.javaweb.music_center.pojo.Salesman;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 public class AdminPageController {
+    @Autowired
+    History3DAO history3DAO;
+
     @GetMapping(value="/admin")
     public String admin(){
-        return "redirect:admin_chart_show";
+        return "redirect:admin_login";
+    }
+
+    @GetMapping(value = "/admin_login")
+    public String adminLogin(){
+        return "admin/loginPage";
     }
 
     @GetMapping(value="/admin_category_list")
@@ -60,13 +77,13 @@ public class AdminPageController {
         return "admin/listUser";
     }
 
-    @GetMapping(value = "/admin_chart_show")
-    public String showChart(){
-        return "admin/chartShow";
+    @GetMapping(value="/admin_salesman_list")
+    public String listSalesman(){
+        return "admin/listSalesman";
     }
 
-    @GetMapping(value = "/adminlogin")
-    public String login(){
-        return "admin/adminLogin";
+    @GetMapping(value="/admin_salesman_edit")
+    public String editSalesman(){
+        return "admin/editSalesman";
     }
 }

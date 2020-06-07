@@ -1,15 +1,24 @@
 package com.example.javaweb.music_center.web;
 
+import com.example.javaweb.music_center.dao.History1DAO;
+import com.example.javaweb.music_center.pojo.History1;
+import com.example.javaweb.music_center.pojo.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class ForePageController {
+    @Autowired
+    History1DAO history1DAO;
+
     @GetMapping(value = "/")
     public String index(){
         return "redirect:home";
@@ -31,10 +40,17 @@ public class ForePageController {
     }
 
     @GetMapping("/forelogout")
-    public String logout() {
+    public String logout(HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated())
             subject.logout();
+        History1 history1 = new History1();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String time = df.format(new Date());
+        history1.setTime(time);
+        history1.setUser((User) session.getAttribute("user"));
+        history1.setOperate("logout");
+        history1DAO.save(history1);
         return "redirect:home";
     }
 

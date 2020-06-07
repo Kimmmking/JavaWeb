@@ -3,7 +3,7 @@
         <div v-for="p in c.products" class="productUnit" :price="p.promotePrice">
             <a :href="'product?pid='+p.id">
                 <div class="productUnitFrame">
-                    <img class="productImage" :src="'http://106.12.105.160/webapp/img/productSingle/'+p.firstProductImage.id+'.jpg'">
+                    <img class="productImage" :src="'http://47.102.100.152/webapp/img/productSingle/'+p.firstProductImage.id+'.jpg'">
                     <span class="productPrice">￥{{p.promotePrice|formatMoneyFilter}} </span>
 
                     <p class="productName">{{p.name|subStringFilter(0,50)}}</p>
