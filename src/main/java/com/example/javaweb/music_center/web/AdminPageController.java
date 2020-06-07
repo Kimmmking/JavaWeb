@@ -86,4 +86,9 @@ public class AdminPageController {
     public String editSalesman(){
         return "admin/editSalesman";
     }
+
+    @GetMapping(value = "/admin_chart_show")
+    public String showChart(){
+        return "admin/chartShow";
+    }
 }

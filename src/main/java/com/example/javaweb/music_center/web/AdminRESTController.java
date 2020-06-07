@@ -55,6 +55,7 @@ public class AdminRESTController {
             history3DAO.save(history3);
             return Result.success();
         }
+
     }
 
     @GetMapping("/adminlogout")
@@ -70,4 +71,11 @@ public class AdminRESTController {
         return "redirect:admin_login";
     }
 
+    @GetMapping("/admincheckLogin")
+    public Object checkLogin( HttpSession session) {
+        User user =(User)  session.getAttribute("admin");
+        if(null!=user)
+            return Result.success();
+        return Result.fail("未登录");
+    }
 }

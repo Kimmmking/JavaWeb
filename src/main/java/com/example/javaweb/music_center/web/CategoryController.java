@@ -83,7 +83,6 @@ public class CategoryController {
         List<Category> categories = categoryService.list();
         List<Integer> saleCount = new ArrayList<>();
 
-
         List<OrderItem> orderItems = orderItemService.getAll();
         float[] saleAmount = new float[4];
         int num = 0;
