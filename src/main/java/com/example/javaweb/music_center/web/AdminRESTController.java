@@ -73,8 +73,8 @@ public class AdminRESTController {
 
     @GetMapping("/admincheckLogin")
     public Object checkLogin( HttpSession session) {
-        User user =(User)  session.getAttribute("admin");
-        if(null!=user)
+        Salesman salesman =(Salesman)  session.getAttribute("salesman");
+        if(null != salesman)
             return Result.success();
         return Result.fail("未登录");
     }
