@@ -10,7 +10,7 @@
             <div class="productItem" >
                 <li class="item"  v-for="p,index in c.products" v-if="index < 4">
                     <a class="productItemDescLink" :href="'product?pid='+p.id">
-                        <img class="item-img" :src="'http://47.115.24.41webapp/img/productSingle_middle/'+p.firstProductImage.id+'.jpg'">
+                        <img class="item-img" :src="'http://47.115.24.41/webapp/img/productSingle_middle/'+p.firstProductImage.id+'.jpg'">
                         <h4 class="item-title">{{p.name | subStringFilter(0,20)}}</h4>
                         <p class="item-owner">{{p.subTitle | subStringFilter(0,20)}}</p>
                         <span class="item-price">{{p.promotePrice | formatMoneyFilter}} RMB</span>
