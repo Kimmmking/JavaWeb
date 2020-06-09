@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class AdminRESTController {
     }
 
     @PostMapping("/adminlogin")
-    public Object login(@RequestBody Salesman salesmanParam, HttpSession session){
+    public Object login(@RequestBody Salesman salesmanParam, HttpSession session, HttpServletRequest request){
         Salesman salesman = salesmanService.getByNameAndPassword(salesmanParam.getName(), salesmanParam.getPassword());
         System.out.println(salesmanParam.getName()+" "+salesmanParam.getPassword());
         if(null == salesman){
@@ -46,12 +47,14 @@ public class AdminRESTController {
         }
         else{
             session.setAttribute("salesman", salesman);
+            String ip = request.getRemoteAddr();
             History3 history3 = new History3();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             String time = df.format(new Date());
             history3.setTime(time);
             history3.setSalesman(salesman);
             history3.setOperate("login");
+            history3.setIp(ip);
             history3DAO.save(history3);
             return Result.success();
         }
@@ -59,13 +62,15 @@ public class AdminRESTController {
     }
 
     @GetMapping("/adminlogout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
+        String ip = request.getRemoteAddr();
         History3 history3 = new History3();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());
         history3.setTime(time);
         history3.setSalesman((Salesman) session.getAttribute("salesman"));
         history3.setOperate("logout");
+        history3.setIp(ip);
         history3DAO.save(history3);
         session.removeAttribute("salesman");
         return "redirect:admin_login";

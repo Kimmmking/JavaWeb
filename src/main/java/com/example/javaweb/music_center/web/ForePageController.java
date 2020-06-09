@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,16 +41,18 @@ public class ForePageController {
     }
 
     @GetMapping("/forelogout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated())
             subject.logout();
+        String ip = request.getRemoteAddr();
         History1 history1 = new History1();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());
         history1.setTime(time);
         history1.setUser((User) session.getAttribute("user"));
         history1.setOperate("logout");
+        history1.setIp(ip);
         history1DAO.save(history1);
         return "redirect:home";
     }

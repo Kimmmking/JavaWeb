@@ -16,6 +16,7 @@ public class History5 {
     private String sname;
     private String time;
     private String operate;
+    private String ip;
 
     public int getId() {
         return id;
@@ -47,5 +48,13 @@ public class History5 {
 
     public void setOperate(String operate) {
         this.operate = operate;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

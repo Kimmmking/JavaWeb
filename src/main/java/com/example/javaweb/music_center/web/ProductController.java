@@ -43,37 +43,43 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Object add(@RequestBody Product bean, HttpSession session) throws Exception {
+    public Object add(@RequestBody Product bean, HttpSession session, HttpServletRequest request) throws Exception {
         bean.setCreateDate(new Date());
+        String ip = request.getRemoteAddr();
         Salesman salesman = (Salesman)session.getAttribute("salesman");
         bean.setSalesman(salesman);
         History4 history4 = new History4();
         history4.setOperate(operation[0]);
         history4.setSalesman(salesman);
         history4.setPname(bean.getName());
+        history4.setIp(ip);
         history4DAO.save(history4);
         productService.add(bean);
         return bean;
     }
 
     @DeleteMapping("/products/{id}")
-    public String delete(@PathVariable("id") int id, HttpSession session)  throws Exception {
+    public String delete(@PathVariable("id") int id, HttpSession session, HttpServletRequest request)  throws Exception {
+        String ip = request.getRemoteAddr();
         History4 history4 = new History4();
         history4.setOperate(operation[1]);
         history4.setSalesman((Salesman)session.getAttribute("salesman"));
         history4.setPname(productService.get(id).getName());
+        history4.setIp(ip);
         history4DAO.save(history4);
         productService.delete(id);
         return null;
     }
 
     @PutMapping("/products")
-    public Object update(@RequestBody Product bean, HttpSession session) throws Exception {
+    public Object update(@RequestBody Product bean, HttpSession session, HttpServletRequest request) throws Exception {
         productService.update(bean);
+        String ip = request.getRemoteAddr();
         History4 history4 = new History4();
         history4.setOperate(operation[2]);
         history4.setSalesman((Salesman)session.getAttribute("salesman"));
         history4.setPname(bean.getName());
+        history4.setIp(ip);
         history4DAO.save(history4);
         return bean;
     }

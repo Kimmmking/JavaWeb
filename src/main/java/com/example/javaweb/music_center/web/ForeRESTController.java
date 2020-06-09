@@ -14,10 +14,10 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -83,7 +83,7 @@ public class ForeRESTController {
     }
 
     @PostMapping("/forelogin")
-    public Object login(@RequestBody User userParam, HttpSession session){
+    public Object login(@RequestBody User userParam, HttpSession session, HttpServletRequest request){
         String email =  userParam.getEmail();
 
         Subject subject = SecurityUtils.getSubject();
@@ -91,12 +91,14 @@ public class ForeRESTController {
         try {
             subject.login(token);
             User user = userService.getByEmail(email);
+            String ip = request.getRemoteAddr();
             History1 history1 = new History1();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             String time = df.format(new Date());
             history1.setTime(time);
             history1.setUser(user);
             history1.setOperate("login");
+            history1.setIp(ip);
             history1DAO.save(history1);
             session.setAttribute("user", user);
             return Result.success();

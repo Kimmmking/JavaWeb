@@ -28,29 +28,33 @@ public class SalesmanController {
     }
 
     @PostMapping("/salesman")
-    public Object add(@RequestBody Salesman salesmanParam) throws Exception {
+    public Object add(@RequestBody Salesman salesmanParam, HttpServletRequest request) throws Exception {
         Salesman salesman = new Salesman(salesmanParam.getName(), salesmanParam.getPassword());
         salesmanService.add(salesman);
+        String ip = request.getRemoteAddr();
         History5 history5 = new History5();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());
         history5.setOperate(operation[0]);
         history5.setSname(salesman.getName());
         history5.setTime(time);
+        history5.setIp(ip);
         return salesman;
     }
 
     @DeleteMapping("/salesman/{id}")
-    public String delete(@PathVariable("id") int id)  throws Exception {
+    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
         if (id == 1){
             return null;
         }
+        String ip = request.getRemoteAddr();
         History5 history5 = new History5();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());
         history5.setOperate(operation[1]);
         history5.setSname(salesmanService.get(id).getName());
         history5.setTime(time);
+        history5.setIp(ip);
         salesmanService.delete(id);
         return null;
     }
@@ -61,13 +65,15 @@ public class SalesmanController {
     }
 
     @PostMapping("/salesman/{id}")
-    public Object update(@RequestBody Salesman bean) throws Exception {
+    public Object update(@RequestBody Salesman bean, HttpServletRequest request) throws Exception {
+        String ip = request.getRemoteAddr();
         History5 history5 = new History5();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String time = df.format(new Date());
         history5.setOperate(operation[2]);
         history5.setSname(bean.getName());
         history5.setTime(time);
+        history5.setIp(ip);
         salesmanService.update(bean);
         return bean;
     }
